@@ -1,5 +1,5 @@
 // Exercise 1 - Moving pictures
-// Pippin Barr
+// Pippin Barr with added movement from meee
 //
 // Starter code for exercise 1.
 // It moves two pictures around on the canvas.
@@ -25,7 +25,7 @@ var feltTextureImageY;
 // Load the two images we're using before the program starts
 
 function preload() {
-  clownImage = loadImage("assets/images/clown.png");
+  clownImage = loadImage("assets/images/happy_sunflower.png");
   feltTextureImage = loadImage("assets/images/black-felt-texture.png");
 }
 
