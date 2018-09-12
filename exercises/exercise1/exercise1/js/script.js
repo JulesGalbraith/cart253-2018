@@ -7,9 +7,10 @@
 // One moves toward the mouse cursor.
 
 
-// The image of a clown face
+// The image of a SUNFLOWER
+//note - this is a weird picture and i'm changing it to a sunflower -jules
 var clownImage;
-// The current position of the clown face
+// The current position of the SUNFLOWER
 var clownImageX;
 var clownImageY;
 
@@ -19,6 +20,12 @@ var feltTextureImage;
 var feltTextureImageX;
 var feltTextureImageY;
 
+//the image of a rat that moves from left to right
+var fuzziRatImg;
+//the current position of the fuzzi rat image
+var fuzziRatImgX;
+var fuzziRatImgY;
+
 
 // preload()
 //
@@ -27,6 +34,7 @@ var feltTextureImageY;
 function preload() {
   clownImage = loadImage("assets/images/happy_sunflower.png");
   feltTextureImage = loadImage("assets/images/black-felt-texture.png");
+  fuzziRatImg =loadImage("assets/images/Rattiboi.png")
 }
 
 
@@ -45,6 +53,10 @@ function setup() {
   // Start the felt image perfectly off screen above the canvas
   feltTextureImageX = width/2;
   feltTextureImageY = 0 - feltTextureImage.height/2;
+
+  //starts the rat image off screen, at the centre left of the createCanvas
+  fuzziRatImgY = height/2;
+  fuzziRatImgX = 0 - fuzziRatImg.width/2;
 
   // We'll use imageMode CENTER for this script
   imageMode(CENTER);
@@ -75,4 +87,10 @@ function draw() {
 
   // Display the clown image
   image(clownImage,clownImageX,clownImageY);
+
+  //move the rat image across the canvas by increasing its x position
+  fuzziRatImgX += 1;
+
+// display the fuzzi rat!
+image(fuzziRatImg,fuzziRatImgX,fuzziRatImgY);
 }
