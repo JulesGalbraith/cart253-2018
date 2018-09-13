@@ -33,11 +33,20 @@ var fuzziRatImgY;
  var pceYoY;
 
 //the image that will stick to the mouse
+var voidRing;
 var voidRingSize = 60
 
 //its current position
 var voidRingX;
 var voidRingY;
+
+//the text following the mouse
+var slowText = "always chasing, never arriving";
+var slowTextSize = (20)
+
+//current position of the text
+var slowTextX;
+var slowTextY;
 
 // preload()
 //
@@ -48,6 +57,7 @@ function preload() {
   feltTextureImage = loadImage("assets/images/black-felt-texture.png");
   fuzziRatImg =loadImage("assets/images/Rattiboi.png");
   pceYo = loadImage ("assets/images/handz.png");
+  slowTextFont = loadFont("assets/images/Dubiel.ttf");
 
 }
 
@@ -77,11 +87,13 @@ function setup() {
  pceYoY = 2*(height/3);
  pceYoX = 0 - (pceYo.width/2);
 
-noFill();
-strokeWeight(10);
-stroke(20,70);
-voidRing = ellipse(voidRingX,voidRingY,voidRingSize)
- //
+//assings the circle that sticks to the mouse
+voidRing = ellipse(voidRingX,voidRingY,voidRingSize);
+
+ //assigns text formatting/ display
+ textSize(slowTextSize);
+ textFont(slowTextFont);
+ textAlign(CENTER);
 
   // We'll use imageMode CENTER for this script
   imageMode(CENTER);
@@ -133,6 +145,18 @@ image(pceYo,pceYoX,pceYoY);
 voidRingX = mouseX;
 voidRingY = mouseY;
 
+strokeWeight(10);
+stroke(10,50);
+noFill()
 ellipse(voidRingX,voidRingY,voidRingSize);
+
+//display text ever straggling to catch up with the mouse
+
+
+slowTextX = 100 + mouseX;
+slowTextY = mouseY - 100;
+fill(219, 252, 255);
+noStroke();
+text(slowText,slowTextX,slowTextY);
 
 }
