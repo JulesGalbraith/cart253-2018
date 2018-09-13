@@ -32,6 +32,12 @@ var fuzziRatImgY;
  var pceYoX;
  var pceYoY;
 
+//the image that will stick to the mouse
+var voidRingSize = 60
+
+//its current position
+var voidRingX;
+var voidRingY;
 
 // preload()
 //
@@ -42,6 +48,7 @@ function preload() {
   feltTextureImage = loadImage("assets/images/black-felt-texture.png");
   fuzziRatImg =loadImage("assets/images/Rattiboi.png");
   pceYo = loadImage ("assets/images/handz.png");
+
 }
 
 
@@ -69,7 +76,13 @@ function setup() {
 
  pceYoY = 2*(height/3);
  pceYoX = 0 - (pceYo.width/2);
- ;
+
+noFill();
+strokeWeight(10);
+stroke(20,70);
+voidRing = ellipse(voidRingX,voidRingY,voidRingSize)
+ //
+
   // We'll use imageMode CENTER for this script
   imageMode(CENTER);
 }
@@ -98,7 +111,7 @@ function draw() {
   clownImageY = clownImageY + yDistance/10;
 
   // Display the clown image
-  //image(clownImage,clownImageX,clownImageY);
+image(clownImage,clownImageX,clownImageY);
 
   //move the rat image across the canvas by increasing its x position
   fuzziRatImgX += 1;
@@ -107,14 +120,19 @@ function draw() {
 image(fuzziRatImg,fuzziRatImgX,fuzziRatImgY);
 
 //the peace sign goes waaaving across the canvas
-//pceYoX +=1;
-//pceyoY = sin(pceYoX);
 
-pceYoY = (2*(height/3)) + (10*sin(pceYoX/9));
+pceYoY = (2*(height/3)) + (30*sin(pceYoX/15));
 pceYoX += 1;
-
 
 //display the sign of peace!
 image(pceYo,pceYoX,pceYoY);
+
+//display ellipse at mouse position- i know you said image (rather than image or shape),
+//i'm sorry, i made a shape before i went back to look at the instructions!
+
+voidRingX = mouseX;
+voidRingY = mouseY;
+
+ellipse(voidRingX,voidRingY,voidRingSize);
 
 }
