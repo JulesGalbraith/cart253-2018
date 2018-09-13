@@ -26,15 +26,22 @@ var fuzziRatImg;
 var fuzziRatImgX;
 var fuzziRatImgY;
 
+//the image that will move according to a sine wave
+ var pceYo;
+ //current position of the pcesign
+ var pceYoX;
+ var pceYoY;
+
 
 // preload()
 //
-// Load the two images we're using before the program starts
+// Load the images we're using before the program starts
 
 function preload() {
   clownImage = loadImage("assets/images/happy_sunflower.png");
   feltTextureImage = loadImage("assets/images/black-felt-texture.png");
-  fuzziRatImg =loadImage("assets/images/Rattiboi.png")
+  fuzziRatImg =loadImage("assets/images/Rattiboi.png");
+  pceYo = loadImage ("assets/images/handz.png");
 }
 
 
@@ -54,10 +61,15 @@ function setup() {
   feltTextureImageX = width/2;
   feltTextureImageY = 0 - feltTextureImage.height/2;
 
-  //starts the rat image off screen, at the centre left of the createCanvas
-  fuzziRatImgY = height/2;
-  fuzziRatImgX = 0 - fuzziRatImg.width/2;
+  //starts the rat image off screen, at the top third/ left of the createCanvas
+ fuzziRatImgY = height/3;
+ fuzziRatImgX = 0 - fuzziRatImg.width/2;
 
+//starts the peace sign off screen, bottom third of the canvas to the left
+
+ pceYoY = 2*(height/3);
+ pceYoX = 0 - (pceYo.width/2);
+ ;
   // We'll use imageMode CENTER for this script
   imageMode(CENTER);
 }
@@ -86,11 +98,23 @@ function draw() {
   clownImageY = clownImageY + yDistance/10;
 
   // Display the clown image
-  image(clownImage,clownImageX,clownImageY);
+  //image(clownImage,clownImageX,clownImageY);
 
   //move the rat image across the canvas by increasing its x position
   fuzziRatImgX += 1;
 
 // display the fuzzi rat!
 image(fuzziRatImg,fuzziRatImgX,fuzziRatImgY);
+
+//the peace sign goes waaaving across the canvas
+//pceYoX +=1;
+//pceyoY = sin(pceYoX);
+
+pceYoY = (2*(height/3)) + (10*sin(pceYoX/9));
+pceYoX += 1;
+
+
+//display the sign of peace!
+image(pceYo,pceYoX,pceYoY);
+
 }
