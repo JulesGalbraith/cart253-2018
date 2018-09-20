@@ -33,6 +33,17 @@ var enemySpeedIncrease = 0.5;
 // How many dodges the player has made
 var dodges = 0;
 
+//dodge tally location and font
+var tallyX;
+var tallyY;
+var tallySize = 30
+var tallyFont;
+
+//preload()
+//preloads the text and images necessary to bling out game
+function preload() {
+tallyFont = loadFont("assets/images/Grad.TTF");
+}
 // setup()
 //
 // Make the canvas, position the avatar and anemy
@@ -50,6 +61,15 @@ function setup() {
 
   // No stroke so it looks cleaner
   noStroke();
+
+  //creates dodge tally in upper left hand side of createCanvas
+  textSize(14);
+  fill(207, 212, 252);
+  tallyX = width - 10*(width/11);
+  tallyY = height - 10*(height/11);
+  textFont(tallyFont);
+  text(dodges,tallyX,tallyY);
+
 }
 
 // draw()
@@ -137,9 +157,17 @@ function draw() {
     // Increase the enemy's speed and size to make the game harder
     enemySpeed = enemySpeed + enemySpeedIncrease;
     enemySize = enemySize + enemySizeIncrease;
-  }
+}
+  // display dodge tally
+  textSize(tallySize);
+  fill(207, 212, 252);
+  tallyX = width - 3*(width/11);
+  tallyY = height - 10*(height/11);
+  textFont(tallyFont);
+  text(dodges + " DODGES",tallyX,tallyY);
 
-  // Display the current number of successful in the console
+
+  // Display the current number of successful dodges in the console
   console.log(dodges);
 
   // The player is black
