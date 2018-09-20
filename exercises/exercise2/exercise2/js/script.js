@@ -42,7 +42,8 @@ var tallyFont;
 //preload()
 //preloads the text and images necessary to bling out game
 function preload() {
-tallyFont = loadFont("assets/images/Grad.TTF");
+tallyFont = loadFont("assets/fonts/Grad.TTF");
+flowerFont =loadFont("assets/fonts/Floralia.ttf")
 }
 // setup()
 //
@@ -164,7 +165,10 @@ function draw() {
   tallyX = width - 3*(width/11);
   tallyY = height - 10*(height/11);
   textFont(tallyFont);
-  text(dodges + " DODGES",tallyX,tallyY);
+  text(dodges+ " DODGES",tallyX,tallyY);
+  textFont(flowerFont);
+  text("J",tallyX-30,tallyY);
+  text("G",tallyX+91,tallyY);
 
 
   // Display the current number of successful dodges in the console
