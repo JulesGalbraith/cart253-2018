@@ -152,10 +152,10 @@ ellipse(voidRingX,voidRingY,voidRingSize);
 
 //display text ever straggling to catch up with the mouse
 
-slowTextX = random(50,100) + mouseX;
-slowTextY = mouseY - random(50,100);
+slowTextX = 100 + mouseX;
+slowTextY = mouseY - 100;
 fill(219, 252, 255);
-noStroke();
+strokeWeight(1);
 text(slowText,slowTextX,slowTextY);
 
 }
