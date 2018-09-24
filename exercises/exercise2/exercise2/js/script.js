@@ -177,9 +177,11 @@ image (golf,height/2,width/2);
     enemyHeight = enemyHeight + enemySizeIncrease;
     enemyWidth = enemyWidth + enemySizeIncrease;
 
-    //displays enemy enemy
-    console.log(enemyHeight)
-}
+    //alters avatar size and speed by a random amount
+    avatarHeight = avatarHeight*random(0.2,2);
+    avatarWidth = avatarWidth*random(0.2,2);
+
+  }
   // display dodge tally
   textSize(tallySize);
   fill(207, 212, 252);
@@ -196,7 +198,7 @@ image (golf,height/2,width/2);
   console.log(dodges);
 
   // The player is DONALD TRUMP
-  image(avatar,avatarX,avatarY,avatarSize,avatar.height*0.06);
+  image(avatar,avatarX,avatarY,avatarWidth,avatarHeight);
 
   // The enemy is ROBERT MUELLER
   image(enemy,enemyX,enemyY,enemyHeight,enemyWidth);
