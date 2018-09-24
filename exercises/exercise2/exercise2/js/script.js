@@ -10,6 +10,8 @@ Starter code for exercise 2.
 // The position and size of our avatar circle
 var avatarX;
 var avatarY;
+var avatarWidth;
+var avatarHeight;
 var avatarSize;
 
 // The speed and velocity of our avatar circle
@@ -24,7 +26,7 @@ var enemySize;
 // How much bigger the enemy circle gets with each successful dodge
 var enemyHeight;
 var enemyWidth;
-var enemySizeIncrease = 0.3;
+var enemySizeIncrease = 1.3;
 
 // The speed and velocity of our enemy circle
 var enemySpeed = 5;
@@ -69,6 +71,8 @@ function setup() {
   //assigns a value to avatar and enemy size
 
   avatarSize =(avatar.width *0.06);
+  avatarWidth =(avatar.height*0.06);
+  avatarHeight =(avatar.width*0.06);
   enemySize =(enemy.width*0.08);
   enemyHeight = (enemy.height*0.06);
   enemyWidth = (enemy.width*0.06);
@@ -135,7 +139,8 @@ image (golf,height/2,width/2);
     enemyX = 0;
     enemyY = random(0,height);
     // Reset the enemy's size and speed
-    enemySize = 50;
+    enemyHeight = (enemy.height*0.06);
+    enemyWidth = (enemy.width*0.06);
     enemySpeed = 5;
     // Reset the avatar's position
     avatarX = width/2;
@@ -150,7 +155,8 @@ image (golf,height/2,width/2);
     console.log("YOU LOSE!");
     enemyX = 0;
     enemyY = random(0,height);
-    enemySize = 50;
+    enemyHeight = (enemy.height*0.06);
+    enemyWidth = (enemy.width*0.06);
     enemySpeed = 5;
     avatarX = width/2;
     avatarY = height/2;
