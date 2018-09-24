@@ -10,7 +10,7 @@ Starter code for exercise 2.
 // The position and size of our avatar circle
 var avatarX;
 var avatarY;
-var avatarSize = 50;
+var avatarSize;
 
 // The speed and velocity of our avatar circle
 var avatarSpeed = 10;
@@ -20,9 +20,11 @@ var avatarVY = 0;
 // The position and size of the enemy circle
 var enemyX;
 var enemyY;
-var enemySize = 50;
+var enemySize;
 // How much bigger the enemy circle gets with each successful dodge
-var enemySizeIncrease = 5;
+var enemyHeight;
+var enemyWidth;
+var enemySizeIncrease = 0.3;
 
 // The speed and velocity of our enemy circle
 var enemySpeed = 5;
@@ -45,7 +47,8 @@ function preload() {
 tallyFont = loadFont("assets/fonts/Grad.TTF");
 flowerFont =loadFont("assets/fonts/Floralia.ttf");
 avatar = loadImage("assets/images/theDonald.png");
-enemy =loadImage("assets/images/mueller.png;")
+enemy =loadImage("assets/images/mueller.png");
+golf =loadImage("assets/images/golf.png");
 }
 // setup()
 //
@@ -53,6 +56,7 @@ enemy =loadImage("assets/images/mueller.png;")
 function setup() {
   // Create our playing area
   createCanvas(500,500);
+  imageMode(CENTER)
 
   // Put the avatar in the centre
   avatarX = width/2;
@@ -62,8 +66,12 @@ function setup() {
   enemyX = 0;
   enemyY = random(0,height);
 
-  // No stroke so it looks cleaner
-  noStroke();
+  //assigns a value to avatar and enemy size
+
+  avatarSize =(avatar.width *0.06);
+  enemySize =(enemy.width*0.08);
+  enemyHeight = (enemy.height*0.06);
+  enemyWidth = (enemy.width*0.06);
 
   //creates dodge tally in upper left hand side of createCanvas
   textSize(14);
@@ -81,7 +89,7 @@ function setup() {
 // game over situations.
 function draw() {
   // A pink background
-  background(255,220,220);
+image (golf,height/2,width/2);
 
   // Default the avatar's velocity to 0 in case no key is pressed this frame
   avatarVX = 0;
@@ -116,10 +124,7 @@ function draw() {
   // Update the enemy's position based on its velocity
   enemyX = enemyX + enemyVX;
 
-//assigns a value to avatar and enemy size
 
-avatarSize =(avatar.width*0.1);
-enemySize =(enemy.width*0.1)
   // Check if the enemy and avatar overlap - if they do the player loses
   // We do this by checking if the distance between the centre of the enemy
   // and the centre of the avatar is less that their combined radii
@@ -163,7 +168,11 @@ enemySize =(enemy.width*0.1)
     enemyY = random(0,height);
     // Increase the enemy's speed and size to make the game harder
     enemySpeed = enemySpeed + enemySpeedIncrease;
-    enemySize = enemySize * enemySizeIncrease;
+    enemyHeight = enemyHeight + enemySizeIncrease;
+    enemyWidth = enemyWidth + enemySizeIncrease;
+
+    //displays enemy enemy
+    console.log(enemyHeight)
 }
   // display dodge tally
   textSize(tallySize);
@@ -181,9 +190,9 @@ enemySize =(enemy.width*0.1)
   console.log(dodges);
 
   // The player is DONALD TRUMP
-  image(avatar,avatarX,avatarY,avatarSize);
+  image(avatar,avatarX,avatarY,avatarSize,avatar.height*0.06);
 
   // The enemy is ROBERT MUELLER
-  image(enemy,enemyX,enemyY,enemySize)
+  image(enemy,enemyX,enemyY,enemyHeight,enemyWidth);
 
 }
