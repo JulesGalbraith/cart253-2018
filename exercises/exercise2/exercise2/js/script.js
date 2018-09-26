@@ -145,6 +145,9 @@ image (golf,height/2,width/2);
     // Reset the avatar's position
     avatarX = width/2;
     avatarY = height/2;
+    //resets avatar's size
+    avatarWidth =(avatar.height*0.06);
+    avatarHeight =(avatar.width*0.06);
     // Reset the dodge counter
     dodges = 0;
   }
@@ -160,6 +163,8 @@ image (golf,height/2,width/2);
     enemySpeed = 5;
     avatarX = width/2;
     avatarY = height/2;
+    avatarWidth =(avatar.height*0.06);
+    avatarHeight =(avatar.width*0.06);
     dodges = 0;
   }
 
@@ -178,8 +183,8 @@ image (golf,height/2,width/2);
     enemyWidth = enemyWidth + enemySizeIncrease;
 
     //alters avatar size and speed by a random amount
-    avatarHeight = avatarHeight*random(0.2,2);
-    avatarWidth = avatarWidth*random(0.2,2);
+    avatarHeight = avatarHeight*random(0.4,1.5);
+    avatarWidth = avatarWidth*random(0.4,1.5);
 
   }
   // display dodge tally
