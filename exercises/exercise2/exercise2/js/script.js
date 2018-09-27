@@ -202,6 +202,8 @@ image (golf,height/2,width/2);
     avatarSpeed =10;
     dodges = 0;
     cohenX = 2*height;
+    //resets stormy daniels offscreen
+    stormyY = 0 - stormy.height/2
   }
 
   // Check if the enemy has moved all the way across the screen
@@ -224,9 +226,6 @@ image (golf,height/2,width/2);
     avatarHeight = avatarHeight*random(0.4,1.5);
     avatarWidth = avatarWidth*random(0.4,1.5);
     avatarSpeed = random(1.5,15);
-
-    //resets stormy daniels offscreen
-    stormyY = 0 - stormy.height/2
   }
 
   //makes a celebratory putin appear and rotate around the centre if Trump keeps dodging successfully
@@ -296,11 +295,10 @@ text ("Press Any Key or Hold Down Mouse",1*(width/4),3.5*(height/4),);
 
  }
 
-
-//at mouseReleased, sends stormy daniels down the screen at avatar x
+//at mkeytyped, sends stormy daniels down the screen at avatar x
 function keyTyped() {
   stormyX = avatarX;
-  stormyY =+ 10
+  stormyY = stormyY + 10;
   console.log("key was typed");
 
 }
