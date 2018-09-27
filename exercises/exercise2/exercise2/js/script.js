@@ -35,19 +35,25 @@ var enemyVX = 5;
 var enemySpeedIncrease = 0.5;
 
 //position of CELEBRATORY PUTIN
-partyPutinX = 50;
-partyPutinY = 50;
-partyPutinAngle = 0;
+var partyPutinX = 50;
+var partyPutinY = 50;
+var partyPutinAngle = 0;
+
+//position of ACCUSATORY putin
+var putinPointsX;
+var putinPointsY;
 
 //position of PAUL MANAFORT
-manafortX;
-manafortY;
+var manafortX;
+var manafortY;
 
 //position of MICHAEL COHEN
-cohenX;
-cohenY;
+var cohenX;
+var cohenY;
 
-//position
+//position of STORMY DANIELS
+var stormyX;
+var stormyY = 0;
 
 // How many dodges the player has made
 var dodges = 0;
@@ -113,7 +119,7 @@ function setup() {
 // Handle moving the avatar and enemy and checking for dodges and
 // game over situations.
 function draw() {
-  // A pink background
+  // A golf course
 image (golf,height/2,width/2);
 
   // Default the avatar's velocity to 0 in case no key is pressed this frame
@@ -216,18 +222,35 @@ image (golf,height/2,width/2);
     avatarSpeed = random(1.5,15);
   }
 
-  //makes a celebratory putin appear if Trump keeps dodging successfully
-
-  if (dodges > 2) {
-  //angleMode(DEGREES);
+  //makes a celebratory putin appear and rotate around the centre if Trump keeps dodging successfully
+  if (dodges > 1) {
+  angleMode(DEGREES);
   push();
-  partyPutinAngle = partyPutinAngle + 0.02;
+  partyPutinAngle = partyPutinAngle + 0.5;
   translate(width/2,height/2);
     rotate(partyPutinAngle);
     image(partyPutin,partyPutinX,partyPutinY);
     pop();
   }
 
+// makes putin point accusingly if trump fails to dodge too frequently
+  if (losses > 5 && enemyY > height/2) {
+    putinPointsX = enemyX;
+    putinPointsY = enemyY - 50;
+    image(putinPoints,putinPointsX,putinPointsY);
+  }
+ else if (losses > 5 && enemyY < height/3) {
+    putinPointsX = enemyX;
+    putinPointsY = enemyY + 50;
+  }
+
+//at mouseReleased, sends stormy daniels down the screen at mouse
+function mousePressed() {
+  stormyX = mouseX;
+  stormyY = stormyY + 1;
+  image(stormy,stormyX,stormyY);
+  console.log("mouse was pressed");
+}
 
   // display dodge tally
   textSize(tallySize);
