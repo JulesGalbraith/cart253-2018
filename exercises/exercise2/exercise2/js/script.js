@@ -34,6 +34,11 @@ var enemyVX = 5;
 // How much bigger the enemy circle gets with each successful dodge
 var enemySpeedIncrease = 0.5;
 
+//position of celebratory putin
+partyPutinX = 100;
+partyPutinY = 100;
+partyPutinAngle = 0;
+
 // How many dodges the player has made
 var dodges = 0;
 
@@ -51,6 +56,11 @@ flowerFont =loadFont("assets/fonts/Floralia.ttf");
 avatar = loadImage("assets/images/theDonald.png");
 enemy =loadImage("assets/images/mueller.png");
 golf =loadImage("assets/images/golf.png");
+putinPoints =loadImage("assets/images/putinPoints.png")
+stormy =loadImage("assets/images/stormy.png");
+manafort =loadImage("assets/images/manafort.png");
+cohen =loadImage("assets/images/michaelCohen.png");
+partyPutin =loadImage("assets/images/partyPutin.png");
 }
 // setup()
 //
@@ -68,8 +78,7 @@ function setup() {
   enemyX = 0;
   enemyY = random(0,height);
 
-  //assigns a value to avatar and enemy size
-
+  //assigns a value to sizes- height and width- of avatar and enemy
   avatarSize =(avatar.width *0.06);
   avatarWidth =(avatar.height*0.06);
   avatarHeight =(avatar.width*0.06);
@@ -84,7 +93,6 @@ function setup() {
   tallyY = height - 10*(height/11);
   textFont(tallyFont);
   text(dodges,tallyX,tallyY);
-
 }
 
 // draw()
@@ -145,9 +153,10 @@ image (golf,height/2,width/2);
     // Reset the avatar's position
     avatarX = width/2;
     avatarY = height/2;
-    //resets avatar's size
+    //resets avatar's size and speed
     avatarWidth =(avatar.height*0.06);
     avatarHeight =(avatar.width*0.06);
+    avatarSpeed =10
     // Reset the dodge counter
     dodges = 0;
   }
@@ -165,6 +174,7 @@ image (golf,height/2,width/2);
     avatarY = height/2;
     avatarWidth =(avatar.height*0.06);
     avatarHeight =(avatar.width*0.06);
+    avatarSpeed =10;
     dodges = 0;
   }
 
@@ -185,6 +195,19 @@ image (golf,height/2,width/2);
     //alters avatar size and speed by a random amount
     avatarHeight = avatarHeight*random(0.4,1.5);
     avatarWidth = avatarWidth*random(0.4,1.5);
+    avatarSpeed = random(1.5,15);
+  }
+
+  //makes a celebratory putin appear if Trump keeps dodging successfully
+
+  if (dodges > 2) {
+  //angleMode(DEGREES);
+  push();
+  partyPutinAngle = partyPutinAngle + 1;
+  translate(width/2,height/2);
+    rotate(partyPutinAngle);
+    image(partyPutin,partyPutinX,partyPutinY);
+    pop();
 
   }
   // display dodge tally
