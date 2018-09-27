@@ -181,6 +181,8 @@ image (golf,height/2,width/2);
     avatarSpeed =10
     // Reset the dodge counter
     dodges = 0;
+    //resets michael cohen offscreen
+    cohenX = 2*height;
   }
 
   // Check if the avatar has gone off the screen (cheating!)
@@ -199,6 +201,7 @@ image (golf,height/2,width/2);
     avatarHeight =(avatar.width*0.06);
     avatarSpeed =10;
     dodges = 0;
+    cohenX = 2*height;
   }
 
   // Check if the enemy has moved all the way across the screen
@@ -221,10 +224,13 @@ image (golf,height/2,width/2);
     avatarHeight = avatarHeight*random(0.4,1.5);
     avatarWidth = avatarWidth*random(0.4,1.5);
     avatarSpeed = random(1.5,15);
+
+    //resets stormy daniels offscreen
+    stormyY = 0 - stormy.height/2
   }
 
   //makes a celebratory putin appear and rotate around the centre if Trump keeps dodging successfully
-  if (dodges > losses) {
+  if (dodges > 5) {
   angleMode(DEGREES);
   push();
   partyPutinAngle = partyPutinAngle + 0.5;
@@ -234,8 +240,9 @@ image (golf,height/2,width/2);
     pop();
   }
 
-// makes putin point accusingly if trump fails to dodge too frequently i.e. if
-//the number of losses
+// makes putin point accusingly + stick to enemy avatar if trump
+//fails to dodge too frequently i.e. if
+//the number of losses is higher than the number of dodges
   if (losses > dodges && enemyY > height/2) {
     putinPointsX = enemyX;
     putinPointsY = enemyY - 50;
@@ -244,26 +251,32 @@ image (golf,height/2,width/2);
   else if (losses > dodges && enemyY < height/2) {
     putinPointsX = enemyX;
     putinPointsY = enemyY + 50;
-
-    //makes paul manafor appear in bottom left hand corner if trump scrapes the
+    image(putinPoints,putinPointsX,putinPointsY)
+ }
+    //makes paul manafort appear in bottom right hand corner if trump scrapes the
     //bottom
-    if (avatarY > 2*(height/3)) {}
-    manafortX = avatarX + 1;
-    manafortY = avatarY;
+    if (avatarY > 2*(height/3)) {
+    manafortX = 3*(width/4);
+    manafortY = 3*(height/4);
     image(manafort,manafortX,manafortY);
 
-  }
+    }
 
   // display dodge tally
   textSize(tallySize);
   fill(207, 212, 252);
-  tallyX = width - 3*(width/11);
+  tallyX = width - 6*(width/11);
   tallyY = height - 10*(height/11);
   textFont(tallyFont);
-  text(dodges+ " DODGES",tallyX,tallyY);
+  text(dodges+ " DODGES! NO COLLUSION!",tallyX,tallyY);
+  push()
   textFont(flowerFont);
   text("J",tallyX-30,tallyY);
-  text("G",tallyX+91,tallyY);
+  text("G",tallyX+235,tallyY);
+  pop()
+
+  //displays basic instructions
+text ("Press Any Key or Hold Down Mouse",1*(width/4),3.5*(height/4),);
 
 
   // Display the current number of successful dodges in the console
@@ -275,22 +288,26 @@ image (golf,height/2,width/2);
   // The enemy is ROBERT MUELLER
   image(enemy,enemyX,enemyY,enemyHeight,enemyWidth);
 
-}
-
-//at mouseReleased, sends stormy daniels down the screen at mouse
-function mouseReleased() {
-  stormyX = avatarX;
-  stormyY = stormyY + 1;
+//stormy Daniels appears
   image(stormy,stormyX,stormyY);
-  console.log("mouse was pressed");
+
+  //michael cohen appears
+  image(cohen,cohenX,cohenY);
+
+ }
+
+
+//at mouseReleased, sends stormy daniels down the screen at avatar x
+function keyTyped() {
+  stormyX = avatarX;
+  stormyY =+ 10
+  console.log("key was typed");
+
 }
 
-// either t or cohen appear to follow the mouse around like lil' lapdogs
-function keyPressed()  {
-  manafortX = mouseX;
-  manafortY = mouseY;
+//  cohen appear to follow the mouse around
+function mouseDragged()  {
   cohenX = mouseX;
   cohenY = mouseY;
-  (image(manafort,manafortX,manafortY) || image(cohen,cohenX,cohenY));
-  console.log("keytyped");
+  console.log("mousepressed");
 }
