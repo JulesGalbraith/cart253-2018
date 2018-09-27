@@ -35,8 +35,8 @@ var enemyVX = 5;
 var enemySpeedIncrease = 0.5;
 
 //position of celebratory putin
-partyPutinX = 100;
-partyPutinY = 100;
+partyPutinX = 50;
+partyPutinY = 50;
 partyPutinAngle = 0;
 
 // How many dodges the player has made
@@ -203,7 +203,7 @@ image (golf,height/2,width/2);
   if (dodges > 2) {
   //angleMode(DEGREES);
   push();
-  partyPutinAngle = partyPutinAngle + 1;
+  partyPutinAngle = partyPutinAngle + 0.02;
   translate(width/2,height/2);
     rotate(partyPutinAngle);
     image(partyPutin,partyPutinX,partyPutinY);
