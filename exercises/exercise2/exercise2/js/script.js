@@ -97,6 +97,7 @@ function setup() {
   enemyX = 0;
   enemyY = random(0,height);
 
+
   //assigns a value to sizes- height and width- of avatar and enemy
   avatarSize =(avatar.width *0.06);
   avatarWidth =(avatar.height*0.06);
@@ -223,7 +224,7 @@ image (golf,height/2,width/2);
   }
 
   //makes a celebratory putin appear and rotate around the centre if Trump keeps dodging successfully
-  if (dodges > 1) {
+  if (dodges > losses) {
   angleMode(DEGREES);
   push();
   partyPutinAngle = partyPutinAngle + 0.5;
@@ -233,24 +234,25 @@ image (golf,height/2,width/2);
     pop();
   }
 
-// makes putin point accusingly if trump fails to dodge too frequently
-  if (losses > 5 && enemyY > height/2) {
+// makes putin point accusingly if trump fails to dodge too frequently i.e. if
+//the number of losses
+  if (losses > dodges && enemyY > height/2) {
     putinPointsX = enemyX;
     putinPointsY = enemyY - 50;
     image(putinPoints,putinPointsX,putinPointsY);
   }
- else if (losses > 5 && enemyY < height/3) {
+  else if (losses > dodges && enemyY < height/2) {
     putinPointsX = enemyX;
     putinPointsY = enemyY + 50;
-  }
 
-//at mouseReleased, sends stormy daniels down the screen at mouse
-function mousePressed() {
-  stormyX = mouseX;
-  stormyY = stormyY + 1;
-  image(stormy,stormyX,stormyY);
-  console.log("mouse was pressed");
-}
+    //makes paul manafor appear in bottom left hand corner if trump scrapes the
+    //bottom
+    if (avatarY > 2*(height/3)) {}
+    manafortX = avatarX + 1;
+    manafortY = avatarY;
+    image(manafort,manafortX,manafortY);
+
+  }
 
   // display dodge tally
   textSize(tallySize);
@@ -273,4 +275,22 @@ function mousePressed() {
   // The enemy is ROBERT MUELLER
   image(enemy,enemyX,enemyY,enemyHeight,enemyWidth);
 
+}
+
+//at mouseReleased, sends stormy daniels down the screen at mouse
+function mouseReleased() {
+  stormyX = avatarX;
+  stormyY = stormyY + 1;
+  image(stormy,stormyX,stormyY);
+  console.log("mouse was pressed");
+}
+
+// either t or cohen appear to follow the mouse around like lil' lapdogs
+function keyPressed()  {
+  manafortX = mouseX;
+  manafortY = mouseY;
+  cohenX = mouseX;
+  cohenY = mouseY;
+  (image(manafort,manafortX,manafortY) || image(cohen,cohenX,cohenY));
+  console.log("keytyped");
 }
