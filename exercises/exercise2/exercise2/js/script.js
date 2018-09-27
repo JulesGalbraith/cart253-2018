@@ -34,13 +34,26 @@ var enemyVX = 5;
 // How much bigger the enemy circle gets with each successful dodge
 var enemySpeedIncrease = 0.5;
 
-//position of celebratory putin
+//position of CELEBRATORY PUTIN
 partyPutinX = 50;
 partyPutinY = 50;
 partyPutinAngle = 0;
 
+//position of PAUL MANAFORT
+manafortX;
+manafortY;
+
+//position of MICHAEL COHEN
+cohenX;
+cohenY;
+
+//position
+
 // How many dodges the player has made
 var dodges = 0;
+
+// how many times the player has ABCDEFGHIJKLMNOPQRSTUVWXYZ
+var losses = 0
 
 //dodge tally location and font
 var tallyX;
@@ -142,7 +155,9 @@ image (golf,height/2,width/2);
   // and the centre of the avatar is less that their combined radii
   if (dist(enemyX,enemyY,avatarX,avatarY) < enemySize/2 + avatarSize/2) {
     // Tell the player they lost
-    console.log("YOU LOSE!");
+    console.log("YOU'RE FIRED "+losses);
+   //logs 1 loss
+   losses = losses + 1
     // Reset the enemy's position
     enemyX = 0;
     enemyY = random(0,height);
@@ -164,7 +179,8 @@ image (golf,height/2,width/2);
   // Check if the avatar has gone off the screen (cheating!)
   if (avatarX < 0 || avatarX > width || avatarY < 0 || avatarY > height) {
     // If they went off the screen they lose in the same way as above.
-    console.log("YOU LOSE!");
+    console.log("YOU'RE FIRED "+losses);
+    losses = losses + 1;
     enemyX = 0;
     enemyY = random(0,height);
     enemyHeight = (enemy.height*0.06);
@@ -187,6 +203,8 @@ image (golf,height/2,width/2);
     // Reset the enemy's position to the left at a random height
     enemyX = 0;
     enemyY = random(0,height);
+    //resets loss counter
+    losses = 0;
     // Increase the enemy's speed and size to make the game harder
     enemySpeed = enemySpeed + enemySpeedIncrease;
     enemyHeight = enemyHeight + enemySizeIncrease;
@@ -208,8 +226,9 @@ image (golf,height/2,width/2);
     rotate(partyPutinAngle);
     image(partyPutin,partyPutinX,partyPutinY);
     pop();
-
   }
+
+
   // display dodge tally
   textSize(tallySize);
   fill(207, 212, 252);
