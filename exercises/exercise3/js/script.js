@@ -126,6 +126,8 @@ function draw() {
     strokeWeight(10);
     ellipse(targetX,targetY,targetImage.width,targetImage.height);
   }
+  fill(random(0,256),random(0,256),random(0,256));
+  text("WHERE DIS DOG????",5*width/6,height/6);
 }
 
 // mousePressed()

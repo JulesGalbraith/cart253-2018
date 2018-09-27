@@ -290,8 +290,9 @@ text ("Press Any Key or Hold Down Mouse",1*(width/4),3.5*(height/4),);
 //stormy Daniels appears
   image(stormy,stormyX,stormyY);
 
-  //michael cohen appears
+
   image(cohen,cohenX,cohenY);
+
 
  }
 
