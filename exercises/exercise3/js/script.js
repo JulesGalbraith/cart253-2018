@@ -15,6 +15,14 @@ var targetX;
 var targetY;
 var targetImage;
 
+//the flickering square coordinates
+var signX;
+var signY;
+var signWidth = 320;
+var signHeight = 180;
+
+//distance between centre of saucisse dog and centre of sign
+var distDogSign;
 // The ten decoy images
 var decoyImage1;
 var decoyImage2;
@@ -103,11 +111,26 @@ function setup() {
     }
   }
 
+  signX = 4*width/5;
+  signY = height/5.5;
+  rectMode(CENTER);
+  strokeWeight(5);
+  stroke(220,100,50);
+  fill(255,random(40,150),115);
+  rect(signX,signY,signWidth,signHeight);
+
   // Once we've displayed all decoys, we choose a location for the target
   targetX = random(0,width);
   targetY = random(0,height);
+
+  distDogSign = dist(signX,signY,targetX,targetY);
+  while (distDogSign < signWidth) {
+    targetX = random(0,width);
+    targetY = random(0,height);
+  }
   // And draw it (this means it will always be on top)
   image(targetImage,targetX,targetY);
+
 }
 
 function draw() {
@@ -126,8 +149,24 @@ function draw() {
     strokeWeight(10);
     ellipse(targetX,targetY,targetImage.width,targetImage.height);
   }
-  fill(random(0,256),random(0,256),random(0,256));
-  text("WHERE DIS DOG????",5*width/6,height/6);
+
+  //doubles the target image for the sign
+  //draws flickering red sign advertising the lost dog
+
+  signX = 4*width/5;
+  signY = height/5.5;
+  rectMode(CENTER);
+  strokeWeight(5);
+  stroke(220,100,50);
+  fill(255,random(40,150),115);
+  rect(signX,signY,signWidth,signHeight);
+noStroke();
+  textSize(20);
+  textAlign(CENTER);
+  fill(random(150,250));
+  text("WHERE MR. SAUCISSE DOG??",signX,height/3.5);
+  //puts double of targetimage at the centre of flickering sign
+  image(targetImage,signX,signY,1.5*targetImage.width,1.5*targetImage.height);
 }
 
 // mousePressed()
