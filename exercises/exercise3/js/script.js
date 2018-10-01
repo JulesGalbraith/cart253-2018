@@ -14,6 +14,9 @@ https://creativenerds.co.uk/freebies/80-free-wildlife-icons-the-best-ever-animal
 var targetX;
 var targetY;
 var targetImage;
+//target's speed and velocity
+var targetSpeed = 15
+var targetV;
 
 //the flickering square coordinates
 var signX;
@@ -37,7 +40,7 @@ var decoyImage10;
 
 // The number of decoys to show on the screen, randomly
 // chosen from the decoy images
-var numDecoys = 100;
+var numDecoys = 400;
 
 // Keep track of whether they've won
 var gameOver = false;
@@ -80,56 +83,53 @@ function setup() {
     // images, each with a 10% chance of being shown
     // We'll talk more about this nice quality of random soon enough
     if (r < 0.1) {
-      image(decoyImage1,x,y);
+      image(decoyImage1,x,y,decoyImage1.width/2,decoyImage1.height/2);
     }
     else if (r < 0.2) {
-      image(decoyImage2,x,y);
+      image(decoyImage2,x,y,decoyImage2.width/2,decoyImage2.height/2);
     }
     else if (r < 0.3) {
-      image(decoyImage3,x,y);
+      image(decoyImage3,x,y,decoyImage3.width/2,decoyImage3.height/2);
     }
     else if (r < 0.4) {
-      image(decoyImage4,x,y);
+      image(decoyImage4,x,y,decoyImage4.width/2,decoyImage4.height/2);
     }
     else if (r < 0.5) {
-      image(decoyImage5,x,y);
+      image(decoyImage5,x,y,decoyImage5.width/2,decoyImage5.height/2);
     }
     else if (r < 0.6) {
-      image(decoyImage6,x,y);
+      image(decoyImage6,x,y,decoyImage6.width/2,decoyImage6.height/2);
     }
     else if (r < 0.7) {
-      image(decoyImage7,x,y);
+      image(decoyImage7,x,y,decoyImage7.width/2,decoyImage7.height/2);
     }
     else if (r < 0.8) {
-      image(decoyImage8,x,y);
+      image(decoyImage8,x,y,decoyImage8.width/2,decoyImage8.height/2);
     }
     else if (r < 0.9) {
-      image(decoyImage9,x,y);
+      image(decoyImage9,x,y,decoyImage9.width/2,decoyImage9.height/2);
     }
     else if (r < 1.0) {
-      image(decoyImage10,x,y);
+      image(decoyImage10,x,y,decoyImage10.width/2,decoyImage10.height/2);
     }
   }
 
-  signX = 4*width/5;
-  signY = height/5.5;
-  rectMode(CENTER);
-  strokeWeight(5);
-  stroke(220,100,50);
-  fill(255,random(40,150),115);
-  rect(signX,signY,signWidth,signHeight);
+  drawSign();
 
   // Once we've displayed all decoys, we choose a location for the target
   targetX = random(0,width);
   targetY = random(0,height);
 
   distDogSign = dist(signX,signY,targetX,targetY);
+
   while (distDogSign < signWidth) {
     targetX = random(0,width);
     targetY = random(0,height);
+
+    distDogSign = dist(signX,signY,targetX,targetY);
   }
   // And draw it (this means it will always be on top)
-  image(targetImage,targetX,targetY);
+  image(targetImage,targetX,targetY,targetImage.width/2,targetImage.height/2);
 
 }
 
@@ -143,30 +143,59 @@ function draw() {
     fill(random(255));
     // Tell them they won!
     text("YOU WINNED!",width/2,height/2);
-
     noFill();
-    stroke(random(255));
+    stroke (random(150,200),255,random(150,200));
     strokeWeight(10);
     ellipse(targetX,targetY,targetImage.width,targetImage.height);
+
+    //randomizes velocity of target images
+    targetV = random (-15,15);
+    //makes the sausage dog move frantically around the screen
+    targetX += 30*sin(targetV*targetSpeed);
+    targetY += targetV*targetSpeed;
+
+    if (targetX + targetImage.width < 0) {
+      targetX += width;
+    }
+    else if (targetX- targetImage.width > width) {
+      targetX -= width;
+    }
+
+    if (targetY + targetImage.height < 0) {
+      targetY += height;
+    }
+    else if (targetY - targetImage.height > height) {
+      targetY -= height;
+    }
+
+    image(targetImage,targetX,targetY);
+
   }
 
   //doubles the target image for the sign
   //draws flickering red sign advertising the lost dog
 
-  signX = 4*width/5;
-  signY = height/5.5;
-  rectMode(CENTER);
-  strokeWeight(5);
-  stroke(220,100,50);
-  fill(255,random(40,150),115);
-  rect(signX,signY,signWidth,signHeight);
+drawSign();
+
+}
+
+
+//draws the sign advertising the lost saucisse DOG
+function drawSign() {
+signX = 4*width/5;
+signY = height/5.5;
+rectMode(CENTER);
+strokeWeight(5);
+stroke(220,100,50);
+fill(255,random(40,150),115);
+rect(signX,signY,signWidth,signHeight);
 noStroke();
-  textSize(20);
-  textAlign(CENTER);
-  fill(random(150,250));
-  text("WHERE MR. SAUCISSE DOG??",signX,height/3.5);
-  //puts double of targetimage at the centre of flickering sign
-  image(targetImage,signX,signY,1.5*targetImage.width,1.5*targetImage.height);
+textSize(20);
+textAlign(CENTER);
+fill(random(150,250));
+text("WHERE MR. SAUCISSE DOG??",signX,height/3.5);
+//puts double of targetimage at the centre of flickering sign
+image(targetImage,signX,signY,1.5*targetImage.width,1.5*targetImage.height);
 }
 
 // mousePressed()
