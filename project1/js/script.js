@@ -44,6 +44,10 @@ var eatHealth = 10;
 // Number of prey eaten during the game
 var preyEaten = 0;
 
+//sets a vertical offset between lines of text
+var textY;
+var textYOffset = 60;
+
 // setup()
 //
 // Sets up the basic elements of the game
@@ -100,6 +104,7 @@ function draw() {
   }
   else {
     showGameOver();
+    keyPressed();
   }
 }
 
@@ -156,7 +161,7 @@ function movePlayer() {
 }
 
 // updateHealth()
-//
+
 // Reduce the player's health (every frame)
 // Check if the player is dead
 function updateHealth() {
@@ -251,11 +256,26 @@ function drawPlayer() {
 //
 // Display text about the game being over!
 function showGameOver() {
-  textSize(32);
+  textSize(60);
   textAlign(CENTER,CENTER);
-  fill(0);
+  fill(random(200,255));
   var gameOverText = "GAME OVER\n";
-  gameOverText += "You ate " + preyEaten + " prey\n";
-  gameOverText += "before you died."
-  text(gameOverText,width/2,height/2);
+  textY = height/3;
+  text (gameOverText,width/2,textY);
+  push();
+  fill(0);
+  textSize(32);
+  text("You ate " + preyEaten + " prey\n",width/2,(textY+textYOffset));
+  text("before you died.",width/2,textY+(1.5*textYOffset));
+  pop();
+// displays reload intructions
+  //fill(random(200,255));
+  text("Press Enter to Reload",width/2,2*(height/3));
+}
+
+function keyPressed() {
+  if ((gameOver) && keyCode === (ENTER)) {
+location.reload();
+console.log ("reset");
+  }
 }
