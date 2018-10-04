@@ -193,7 +193,7 @@ noStroke();
 textSize(20);
 textAlign(CENTER);
 fill(random(150,250));
-text("WHERE MR. SAUCISSE DOG??",signX,height/3.5);
+text("WHERE MR. SAUCISSE DOG??",signX,signY+(signHeight/2.2));
 //puts double of targetimage at the centre of flickering sign
 image(targetImage,signX,signY,1.5*targetImage.width,1.5*targetImage.height);
 }
