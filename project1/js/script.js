@@ -38,6 +38,8 @@ var preyHealth;
 var preyMaxHealth = 100;
 // Prey fill color
 var preyFill = 200;
+var preyCount = 0;
+var maxPrey = 10;
 
 // Amount of health obtained per frame of "eating" the prey
 var eatHealth = 10;
@@ -52,11 +54,14 @@ var textYOffset = 60;
 //
 // Sets up the basic elements of the game
 function setup() {
-  createCanvas(1000,1000);
+  createCanvas(1800,1500);
 
   noStroke();
 
+while (preyCount < maxPrey) {
   setupPrey();
+  preyCount += 1
+}
   setupPlayer();
 }
 
@@ -64,8 +69,8 @@ function setup() {
 //
 // Initialises prey's position, velocity, and health
 function setupPrey() {
-  preyX = width/5;
-  preyY = height/2;
+  preyX = random(0,width);
+  preyY = random(0,height);
   preyVX = -preyMaxSpeed;
   preyVY = preyMaxSpeed;
   preyHealth = preyMaxHealth;
@@ -270,7 +275,8 @@ function showGameOver() {
   pop();
 // displays reload intructions
   //fill(random(200,255));
-  text("Press Enter to Reload",width/2,2*(height/3));
+  textSize(40)
+  text("PRESS ENTER TO RELOAD",width/2,2*(height/3));
 }
 
 function keyPressed() {
