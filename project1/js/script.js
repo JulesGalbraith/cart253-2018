@@ -1,6 +1,6 @@
 /******************************************************
 
-Game - Chaser
+Game - The Hypochondriac's Dilemma
 Pippin Barr, modified by Jules Galbraith
 
 A simple game of cat and mouse.
@@ -32,7 +32,9 @@ var preyY;
 var preyRadius = 25;
 var preyVX;
 var preyVY;
-var preyMaxSpeed = 10;
+var preyTX;
+var preyTY;
+var preyMaxSpeed = 20;
 // Prey health
 var preyHealth;
 var preyMaxHealth = 100;
@@ -67,7 +69,7 @@ while (preyCount < maxPrey) {
 
 // setupPrey()
 //
-// Initialises prey's position, velocity, and health
+// Initialises prey's position, velocity, noise value determining velocity, and health
 function setupPrey() {
   preyX = random(0,width);
   preyY = random(0,height);
@@ -217,8 +219,10 @@ function movePrey() {
     // and speed of movement
     // Use map() to convert from the 0-1 range of the random() function
     // to the appropriate range of velocities for the prey
-    preyVX = map(random(),0,1,-preyMaxSpeed,preyMaxSpeed);
-    preyVY = map(random(),0,1,-preyMaxSpeed,preyMaxSpeed);
+    preyTX = random(0,500);
+    preyTY = random(0,500);
+    preyVX = map(noise(preyTX),0,1,-preyMaxSpeed,preyMaxSpeed);
+    preyVY = map(noise(preyTY),0,1,-preyMaxSpeed,preyMaxSpeed);
   }
 
   // Update prey position based on velocity
@@ -239,6 +243,8 @@ function movePrey() {
   else if (preyY > height) {
     preyY -= height;
   }
+  preyTX += 0.01;
+  preyTY =+ 0.01;
 }
 
 // drawPrey()
