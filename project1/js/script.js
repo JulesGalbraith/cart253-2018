@@ -31,6 +31,7 @@ var playerFill = 50;
 // Prey position, size, velocity
 var preyX;
 var preyY;
+var preyRadius;
 var preyVX;
 var preyVY;
 var preyTX;
@@ -38,10 +39,7 @@ var preyTY;
 var preyMaxSpeed = 20;
 // Prey health
 var preyHealth;
-var preyMaxHealth = 100;
-// Prey fill color
-var preyFill = 200;
-var preyCount = 0;
+var preyMaxHealth = 255;
 
 //chooses the diagnosis, assigns names to various diseases
 var diagnosis;
@@ -54,7 +52,6 @@ var listeria;
 var lyme;
 var strep;
 var tuberculosis;
-
 
 // Amount of health obtained per frame of "eating" the prey
 var eatHealth = 10;
@@ -75,6 +72,16 @@ function preload() {
  gameOverFont = loadFont("assets/fonts/virgo.ttf");
  //loads player avatar
  player = loadImage("assets/images/whiteBloodCell.png");
+//loads potential diagnoses/ preys
+ blackDeath = loadImage("assets/images/blackDeath.png");
+ commonCold = loadImage("assets/images/commonCold.png");
+ eColi = loadImage("assets/images/ecoli.png");
+ flu = loadImage("assets/images/flu.png");
+ theClap = loadImage("assets/images/gohnorrhea.png");
+ listeria = loadImage("assets/images/listeria.png");
+ lyme = loadImage("assets/images/lyme.png");
+ strep = loadImage("assets/images/strep.png");
+ tuberculosis = loadImage("assets/images/strep.png")
 }
 
 // setup()
@@ -85,6 +92,7 @@ function setup() {
 
   noStroke();
 
+  diagnosis = random();
   setupPrey();
   setupPlayer();
 }
@@ -93,6 +101,7 @@ function setup() {
 //
 // Initialises prey's position, velocity, noise value determining velocity, and health
 function setupPrey() {
+
   preyX = random(0,width);
   preyY = random(0,height);
   preyVX = -preyMaxSpeed;
@@ -197,7 +206,6 @@ function movePlayer() {
   else if (playerX > width) {
     playerX -= width;
   }
-
   if (playerY < 0) {
     playerY += height;
   }
@@ -224,6 +232,8 @@ function updateHealth() {
 //
 // Check if the player overlaps the prey and updates health of both
 function checkEating() {
+
+//checks what the radius of the current prey is
   // Get distance of player to prey
   var d = dist(playerX,playerY,preyX,preyY);
   // Check if it's an overlap
@@ -242,6 +252,7 @@ function checkEating() {
       preyHealth = preyMaxHealth;
       // Track how many prey were eaten
       preyEaten++;
+      diagnosis = random();
     }
   }
 }
@@ -291,39 +302,43 @@ function movePrey() {
 // Draw the prey as an ellipse with alpha based on health
 function drawPrey() {
 
-  diagnosis = random(0,9)
-  tint(preyMaxHealth, preyHealth)
+  tint(preyMaxHealth,preyHealth);
 
-  if (0 < diagnosis < 1) {
+  if (diagnosis < 0.2) {
  image(blackDeath,preyX,preyY);
+ preyRadius = blackDeath.width/2;
 }
-
- else if (1 < diagnosis < 2) {
- image(blackDeath,preyX,preyY);
-}
-else if (2 < diagnosis < 3) {
+else if (diagnosis < 0.3) {
   image(commonCold,preyX,preyY);
+  preyRadius = commonCold.width/2;
 }
-else if (3 < diagnosis < 4) {
+else if (diagnosis < 0.4) {
   image(eColi,preyX,preyY);
+  preyRadius = eColi.width/2;
 }
-else if (4 < diagnosis < 5) {
+else if (diagnosis < 0.5) {
   image(flu,preyX,preyY);
+  preyRadius = flu.width/2;
 }
-else if ( 5 < diagnosis < 6 ) {
+else if (diagnosis < 0.6 ) {
   image(theClap,preyX,preyY);
+  preyRadius = theClap.width/2;
 }
-else if (6 < diagnosis < 7) {
+else if (diagnosis < 0.7) {
   image(listeria,preyX,preyY);
+  preyRadius = listeria.width/2;
 }
-else if (7 < diagnosis < 8 ) {
+else if (diagnosis < 0.8 ) {
   image(lyme,preyX,preyY);
+  preyRadius = lyme.width/2;
 }
-else if (8 < diagnosis < 9) {
-  image (strep, preyX,preyY);
+else if (diagnosis < 0.9) {
+  image(strep,preyX,preyY);
+  preyRadius = strep.width/2;
 }
-else if (9 < diagnosis <10) {
+else if (diagnosis <1.0) {
   image(tuberculosis,preyX,preyY);
+  preyRadius = tuberculosis.wdth/2;
 }
 }
 
