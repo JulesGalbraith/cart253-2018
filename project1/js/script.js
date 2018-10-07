@@ -14,12 +14,14 @@ sprinting, random movement, screen wrap.
 var gameOver = false;
 
 // Player position, size, velocity
+var player;
 var playerX;
 var playerY;
-var playerRadius = 25;
 var playerVX = 0;
 var playerVY = 0;
-var playerMaxSpeed = 10;
+var playerAcceleration = 0.25;
+var playerSpeed = 5;
+var playerMaxSpeed = 15;
 // Player health
 var playerHealth;
 var playerMaxHealth = 255;
@@ -29,7 +31,6 @@ var playerFill = 50;
 // Prey position, size, velocity
 var preyX;
 var preyY;
-var preyRadius = 25;
 var preyVX;
 var preyVY;
 var preyTX;
@@ -41,7 +42,19 @@ var preyMaxHealth = 100;
 // Prey fill color
 var preyFill = 200;
 var preyCount = 0;
-var maxPrey = 10;
+
+//chooses the diagnosis, assigns names to various diseases
+var diagnosis;
+var blackDeath;
+var commonCold;
+var eColi;
+var flu;
+var theClap;
+var listeria;
+var lyme;
+var strep;
+var tuberculosis;
+
 
 // Amount of health obtained per frame of "eating" the prey
 var eatHealth = 10;
@@ -49,21 +62,30 @@ var eatHealth = 10;
 var preyEaten = 0;
 
 //sets a vertical offset between lines of text
+var wordSize = 200;
 var textY;
-var textYOffset = 60;
+var textYOffset;
+//image and font variable names
+var gameOverFont;
+
+
+//preloads images, sounds and fonts
+function preload() {
+  //loads game over text
+ gameOverFont = loadFont("assets/fonts/virgo.ttf");
+ //loads player avatar
+ player = loadImage("assets/images/whiteBloodCell.png");
+}
 
 // setup()
 //
 // Sets up the basic elements of the game
 function setup() {
-  createCanvas(1800,1500);
+  createCanvas(2500,2000);
 
   noStroke();
 
-while (preyCount < maxPrey) {
   setupPrey();
-  preyCount += 1
-}
   setupPlayer();
 }
 
@@ -121,10 +143,10 @@ function draw() {
 function handleInput() {
   // Check for horizontal movement
   if (keyIsDown(LEFT_ARROW)) {
-    playerVX = -playerMaxSpeed;
+    playerVX = -playerSpeed;
   }
   else if (keyIsDown(RIGHT_ARROW)) {
-    playerVX = playerMaxSpeed;
+    playerVX = playerSpeed;
   }
   else {
     playerVX = 0;
@@ -132,15 +154,32 @@ function handleInput() {
 
   // Check for vertical movement
   if (keyIsDown(UP_ARROW)) {
-    playerVY = -playerMaxSpeed;
+    playerVY = -playerSpeed;
   }
   else if (keyIsDown(DOWN_ARROW)) {
-    playerVY = playerMaxSpeed;
+    playerVY = playerSpeed;
   }
   else {
     playerVY = 0;
   }
+
+  //accelerates the player and reduces its health more quickly if Shift is held
+  if (keyIsDown(SHIFT)) {
+    playerSpeed += playerAcceleration;
+    playerSpeed += playerAcceleration;
+
+    playerHealth = constrain(playerHealth - 1,0,playerMaxHealth);
+    console.log(playerSpeed + " acceleration speed")
+  }
 }
+// resets player speed and health diminution once shift is released
+  function keyReleased() {
+    if (keyCode === SHIFT);
+    playerSpeed = 10;
+    playerHealth = constrain(playerHealth - 0.5,0,playerMaxHealth);
+    console.log (playerSpeed + " reset speed");
+  }
+
 
 // movePlayer()
 //
@@ -188,7 +227,7 @@ function checkEating() {
   // Get distance of player to prey
   var d = dist(playerX,playerY,preyX,preyY);
   // Check if it's an overlap
-  if (d < playerRadius + preyRadius) {
+  if (d < (player.height/2) + preyRadius) {
     // Increase the player health
     playerHealth = constrain(playerHealth + eatHealth,0,playerMaxHealth);
     // Reduce the prey health
@@ -251,40 +290,77 @@ function movePrey() {
 //
 // Draw the prey as an ellipse with alpha based on health
 function drawPrey() {
-  fill(preyFill,preyHealth);
-  ellipse(preyX,preyY,preyRadius*2);
+
+  diagnosis = random(0,9)
+  tint(preyMaxHealth, preyHealth)
+
+  if (0 < diagnosis < 1) {
+ image(blackDeath,preyX,preyY);
+}
+
+ else if (1 < diagnosis < 2) {
+ image(blackDeath,preyX,preyY);
+}
+else if (2 < diagnosis < 3) {
+  image(commonCold,preyX,preyY);
+}
+else if (3 < diagnosis < 4) {
+  image(eColi,preyX,preyY);
+}
+else if (4 < diagnosis < 5) {
+  image(flu,preyX,preyY);
+}
+else if ( 5 < diagnosis < 6 ) {
+  image(theClap,preyX,preyY);
+}
+else if (6 < diagnosis < 7) {
+  image(listeria,preyX,preyY);
+}
+else if (7 < diagnosis < 8 ) {
+  image(lyme,preyX,preyY);
+}
+else if (8 < diagnosis < 9) {
+  image (strep, preyX,preyY);
+}
+else if (9 < diagnosis <10) {
+  image(tuberculosis,preyX,preyY);
+}
 }
 
 // drawPlayer()
 //
 // Draw the player as an ellipse with alpha based on health
 function drawPlayer() {
-  fill(playerFill,playerHealth);
-  ellipse(playerX,playerY,playerRadius*2);
+  tint(playerMaxHealth,playerHealth);
+  image(player,playerX,playerY);
 }
 
 // showGameOver()
 //
 // Display text about the game being over!
 function showGameOver() {
-  textSize(60);
+  textSize(wordSize);
   textAlign(CENTER,CENTER);
+  textFont(gameOverFont);
   fill(random(200,255));
+
+  textYOffset = wordSize*0.7;
   var gameOverText = "GAME OVER\n";
   textY = height/3;
   text (gameOverText,width/2,textY);
   push();
   fill(0);
-  textSize(32);
+  textSize(wordSize*0.5);
   text("You ate " + preyEaten + " prey\n",width/2,(textY+textYOffset));
   text("before you died.",width/2,textY+(1.5*textYOffset));
   pop();
 // displays reload intructions
   //fill(random(200,255));
-  textSize(40)
+  textSize(wordSize/2)
   text("PRESS ENTER TO RELOAD",width/2,2*(height/3));
 }
 
+//resets game if enter is pressed
 function keyPressed() {
   if ((gameOver) && keyCode === (ENTER)) {
 location.reload();
