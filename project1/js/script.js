@@ -81,16 +81,17 @@ function preload() {
  listeria = loadImage("assets/images/listeria.png");
  lyme = loadImage("assets/images/lyme.png");
  strep = loadImage("assets/images/strep.png");
- tuberculosis = loadImage("assets/images/strep.png")
+ tuberculosis = loadImage("assets/images/strep.png");
+ //loads background
+ epistesis = loadImage("assets/images/epistelialLayer.png");
 }
 
 // setup()
 //
 // Sets up the basic elements of the game
 function setup() {
-  createCanvas(2500,2000);
-
-  noStroke();
+  createCanvas(2000,1500);
+//  image(epistesis,width/2,height/2);
 
   diagnosis = random();
   setupPrey();
@@ -126,7 +127,8 @@ function setupPlayer() {
 // displays the two agents.
 // When the game is over, shows the game over screen.
 function draw() {
-  background(100,100,200);
+  imageMode(CENTER);
+  //image(epistesis,width/2,height/2);
 
   if (!gameOver) {
     handleInput();
@@ -302,6 +304,7 @@ function movePrey() {
 // Draw the prey as an ellipse with alpha based on health
 function drawPrey() {
 
+  imageMode(CENTER);
   tint(preyMaxHealth,preyHealth);
 
   if (diagnosis < 0.2) {
@@ -338,7 +341,7 @@ else if (diagnosis < 0.9) {
 }
 else if (diagnosis <1.0) {
   image(tuberculosis,preyX,preyY);
-  preyRadius = tuberculosis.wdth/2;
+  preyRadius = tuberculosis.width/2;
 }
 }
 
