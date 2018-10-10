@@ -62,12 +62,12 @@ var preyEaten = 0;
 
 //determines size and location of a new enemy with the capacity to
 //diminish player health
-var symptomX = random(700,1500);
-var symptomy = random(500,1000);
+var symptomX;
+var symptomY;
 var symptomVX = 10;
-var symptomVY = 10;
-var symptomLength = 50;
-var symptomHeight = 30;
+var symptomVY = 20;
+var symptomLength = 100;
+var symptomHeight = 200;
 var symptomAttacks = 0;
 
 //sets a vertical offset between lines of text
@@ -108,6 +108,8 @@ function setup() {
   diagnosis = random();
   setupPrey();
   setupPlayer();
+  symptomX = random(0,width);
+  symptomY = random(0,height);
 }
 
 // setupPrey()
@@ -120,6 +122,9 @@ function setupPrey() {
   preyVX = -preyInitSpeed;
   preyVY = preyInitSpeed;
   preyHealth = preyMaxHealth;
+
+  symptomX = width/2;
+  symptomY = height/2;
 }
 
 // setupPlayer()
@@ -410,22 +415,42 @@ console.log ("reset");
 //a strange microbe appears to attack our player! i hope it's not lupus!
 function floatingSymptom() {
 
-  symptomX +=symptomVX;
-  //symptomVX += random(-10,10);
-  symptomY = random(0,height)+symptomVY;
-  //symptomVY +=random(-10,10);
+if (preyEaten > 0) {
 
-  strokeWeight(3);
+  symptomX += symptomVX;
+  symptomY += symptomVY*sin(symptomX/200);
+
+  // Screen wrapping
+  if (symptomX < 0) {
+    symptomX += width;
+    symptomY = random(0,height);
+  }
+  else if (symptomX > width) {
+    symptomX -= width;
+    symptomY = random(0,height);
+  }
+  if (symptomY < 0) {
+    symptomY += height;
+  }
+  else if (symptomY > height) {
+    symptomY -= height;
+  }
+
+
+ push();
+  strokeWeight(10);
   stroke(0,100);
-  fill(62, 113, 247,200)
+  fill(62, 113, 247,100);
   ellipse(symptomX,symptomY,symptomHeight,symptomLength);
   fill(255,200);
-  ellipse(symptomX + 20,symptomY,10);
+  ellipse(symptomX + 20,symptomY,50,30);
+  pop();
   //checks if player and new symptom are colliding and reduces player health
     var d = dist(playerX,playerY,symptomX,symptomY);
     if (d < (player.height/2) + symptomHeight) {
-      playerHealth = constrain(playerHealth - eatHealth,0,playerMaxHealth);
-    }
+      symptomAttacks += 1
+     }
+  }
 }
 // alerts the player that their life is in danger
 //function criticalCondition () {
