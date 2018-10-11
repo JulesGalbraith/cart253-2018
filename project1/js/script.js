@@ -30,7 +30,7 @@ var playerMaxSpeed = 15;
 var playerHealth;
 var playerMaxHealth = 255;
 //player size decrease
-var playerSizeDecrease = 0.2;
+var playerSizeDecrease = 0.4;
 
 // Prey position, size, velocity
 var preyX;
@@ -68,8 +68,8 @@ var preyEaten = 0;
 //diminish player health
 var symptomX;
 var symptomY;
-var symptomVX = 10;
-var symptomVY = 20;
+var symptomVX = 20;
+var symptomVY = 10;
 var symptomLength = 100;
 var symptomHeight = 200;
 var symptomAttacks = 0;
@@ -106,6 +106,7 @@ function preload() {
  tuberculosis = loadImage("assets/images/strep.png");
  //loads background
  tissue = loadImage("assets/images/tissue.png");
+ deadTissue = loadImage("assets/images/deadTissue.png");
  //loads sound files
  playMusic = new Audio("assets/sounds/CloudfaceBabyJ.mp3");
  cough = new Audio("assets/sounds/mKoenigCough.mp3")
@@ -167,9 +168,10 @@ function setupPlayer() {
 // When the game is over, shows the game over screen.
 function draw() {
   imageMode(CENTER);
-  image(tissue,height/2,width/2,2500,2000);
 
   if (!gameOver) {
+    image(tissue,width/2,height/2,width,height);
+
     handleInput();
 
     movePlayer();
@@ -185,8 +187,10 @@ function draw() {
 
   }
   else {
+    image(deadTissue,width/2,height/2,width,height);
     showGameOver();
   }
+
 }
 
 // handleInput()
@@ -349,7 +353,7 @@ function movePrey() {
 //
 // Draw the prey as an ellipse with alpha based on health
 function drawPrey() {
-
+push();
   imageMode(CENTER);
   tint(preyMaxHealth,preyHealth);
 
@@ -389,21 +393,24 @@ else if (diagnosis <1.0) {
   image(tuberculosis,preyX,preyY);
   preyRadius = tuberculosis.width/2;
 }
+pop();
 }
 
 // drawPlayer()
 //
 // Draw the player as white blood cell with an alpha based on health
 function drawPlayer() {
-
+ push();
   tint(playerMaxHealth,playerHealth);
   image(player,playerX,playerY);
+  pop();
 }
 
 // showGameOver()
 //
 // Display text about the game being over!
 function showGameOver() {
+
   textSize(wordSize);
   textAlign(CENTER,CENTER);
   textFont(gameOverFont);
@@ -416,8 +423,9 @@ function showGameOver() {
   push();
   fill(0);
   textSize(wordSize*0.5);
-  text("You ate " + preyEaten + " prey\n",width/2,(textY+textYOffset));
-  text("before you died.",width/2,textY+(1.5*textYOffset));
+  text("You fought off " + preyEaten + " infections\n",width/2,(textY+textYOffset));
+  text("but the antibiotics",width/2,textY+(1.5*textYOffset));
+  text("lost efficacy", width/2,textY +(2.5*textYOffset));
   pop();
 // displays reload intructions
   textSize(wordSize/2)
@@ -450,7 +458,7 @@ else {
 
 function floatingSymptom() {
 
-if (preyEaten > 0) {
+if (preyEaten > 4) {
 
   symptomX += symptomVX;
   symptomY += symptomVY*sin(symptomX/250);
