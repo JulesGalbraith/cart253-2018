@@ -8,6 +8,10 @@ A simple game of immune resistance.
 Physics-based movement, keyboard controls, health/stamina,
 sprinting, random movement, screen wrap.
 
+/// images from googling various viruses on google images
+//play music by Cloudface, from https://www.youtube.com/watch?v=6X5rrfhbNd0
+//cough sound by Mike Koenig for soundbible.com
+
 ******************************************************/
 
 // Track whether the game is over
@@ -70,6 +74,8 @@ var symptomLength = 100;
 var symptomHeight = 200;
 var symptomAttacks = 0;
 
+//opacity of the red warning flash
+var warningTint = 0;
 //sets a vertical offset between lines of text
 var wordSize = 200;
 var textY;
@@ -77,6 +83,10 @@ var textYOffset;
 //image and font variable names
 var gameOverFont;
 
+//sound file names
+var playMusic;
+var cough;
+var endMusic;
 
 //preloads images, sounds and fonts
 function preload() {
@@ -96,6 +106,11 @@ function preload() {
  tuberculosis = loadImage("assets/images/strep.png");
  //loads background
  tissue = loadImage("assets/images/tissue.png");
+ //loads sound files
+ playMusic = new Audio("assets/sounds/CloudfaceBabyJ.mp3");
+ cough = new Audio("assets/sounds/mKoenigCough.mp3")
+ endMusic = new Audio("assets/sounds/ChopinNoctureClipped.mp3");
+
 }
 
 // setup()
@@ -104,12 +119,19 @@ function preload() {
 function setup() {
   createCanvas(2000,1500);
   imageMode(CENTER);
-  image(tissue,height/2,width/2,width,height);
+
+//chooses a random number to determine which prey will appear
   diagnosis = random();
+
   setupPrey();
   setupPlayer();
-  symptomX = random(0,width);
+  //sets up symptom's initial position at a random y onn the x origin
+  symptomX = 0;
   symptomY = random(0,height);
+
+  //sets up play music
+  playMusic.loop = true;
+  playMusic.play();
 }
 
 // setupPrey()
@@ -123,8 +145,7 @@ function setupPrey() {
   preyVY = preyInitSpeed;
   preyHealth = preyMaxHealth;
 
-  symptomX = width/2;
-  symptomY = height/2;
+
 }
 
 // setupPlayer()
@@ -134,6 +155,7 @@ function setupPlayer() {
   playerX = 4*width/5;
   playerY = height/2;
   playerHealth = playerMaxHealth;
+
 }
 
 // draw()
@@ -164,7 +186,6 @@ function draw() {
   }
   else {
     showGameOver();
-    keyPressed();
   }
 }
 
@@ -246,7 +267,7 @@ function updateHealth() {
   // Check if the player is dead
   if (playerHealth === 0) {
     // If so, the game is over
-    gameOver = true;
+setGameOver();
   }
 }
 
@@ -399,26 +420,40 @@ function showGameOver() {
   text("before you died.",width/2,textY+(1.5*textYOffset));
   pop();
 // displays reload intructions
-  //fill(random(200,255));
   textSize(wordSize/2)
   text("PRESS ENTER TO RELOAD",width/2,2*(height/3));
 }
 
 //resets game if enter is pressed
 function keyPressed() {
+
+  console.log(keyCode);
+
   if ((gameOver) && keyCode === (ENTER)) {
 location.reload();
-console.log ("reset");
-  }
+ }
+
+if (keyCode === 32) {
+console.log(playMusic.paused);
+if (playMusic.paused) {
+  playMusic.play();
+}
+else {
+  playMusic.pause();
+}
+}
 }
 
-//a strange microbe appears to attack our player! i hope it's not lupus!
+//a strange new symptom appears to attack our player if it successfully
+// wards off multiple infections. the immune system is weakened- i hope
+//it's not lupus!
+
 function floatingSymptom() {
 
 if (preyEaten > 0) {
 
   symptomX += symptomVX;
-  symptomY += symptomVY*sin(symptomX/200);
+  symptomY += symptomVY*sin(symptomX/250);
 
   // Screen wrapping
   if (symptomX < 0) {
@@ -436,7 +471,6 @@ if (preyEaten > 0) {
     symptomY -= height;
   }
 
-
  push();
   strokeWeight(10);
   stroke(0,100);
@@ -445,14 +479,29 @@ if (preyEaten > 0) {
   fill(255,200);
   ellipse(symptomX + 20,symptomY,50,30);
   pop();
-  //checks if player and new symptom are colliding and reduces player health
+  //checks if player and new symptom are colliding
     var d = dist(playerX,playerY,symptomX,symptomY);
-    if (d < (player.height/2) + symptomHeight) {
-      symptomAttacks += 1
+    if (d < (player.height/2) + symptomHeight/2) {
+      playerX = playerX*-1;
+      playerY = playerY*-1;
+      symptomAttacks += 1;
+      console.log(symptomAttacks, "ouch!");
+
+      //plays a coughing noise if the symptom and player interact
+      cough.play();
      }
+
+   push();
+// if the player collides with the new microbe 3 times, game over
+   if (symptomAttacks > 10) {
+     setGameOver();
+  }
   }
 }
-// alerts the player that their life is in danger
-//function criticalCondition () {
 
-//}
+function setGameOver() {
+  gameOver = true
+  playMusic.pause();
+  endMusic.loop = true;
+  endMusic.play();
+}
