@@ -118,7 +118,7 @@ function preload() {
 //
 // Sets up the basic elements of the game
 function setup() {
-  createCanvas(2000,1500);
+  createCanvas(windowWidth,windowHeight);
   imageMode(CENTER);
 
 //chooses a random number to determine which prey will appear
