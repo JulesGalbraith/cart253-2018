@@ -6,7 +6,8 @@
 
 // Game colors
 var bgColor = 0;
-var fgColor = 255;
+/////////new///////////
+//deleted fgColor
 
 // BALL
 
@@ -38,12 +39,20 @@ var leftPaddle = {
   h: 70,
   vx: 0,
   vy: 0,
-  speed: 5,
+  speed: 7,
   upKeyCode: 87, // The key code for W
   downKeyCode: 83, // The key code for S
   ////////new//////////////
+  //changed paddle speed above
   //checks the left paddle's score
-  rebounds: 0
+  rebounds: 0,
+  //colour values, original and mutable
+  origR:0,
+  origG:50,
+  origB:150,
+  r: 0,
+  g: 50,
+  b: 150
   /////end///////////
 }
 
@@ -58,12 +67,20 @@ var rightPaddle = {
   h: 70,
   vx: 0,
   vy: 0,
-  speed: 5,
+  speed: 7,
   upKeyCode: 38, // The key code for the UP ARROW
-  downKeyCode: 40 // The key code for the DOWN ARROW
+  downKeyCode: 40, // The key code for the DOWN ARROW
   ////////new//////////////
+  //changed paddle speed above
   //checks the right paddle's score
-  rebounds: 0
+  rebounds: 0,
+  //colour values
+  origR: 100,
+  origG: 50,
+  origB: 0,
+  r: 100,
+  g: 50,
+  b: 0
   /////end///////////
 }
 
@@ -85,9 +102,12 @@ function preload() {
 function setup() {
   // Create canvas and set drawing modes
   createCanvas(640,480);
+  ////////////new//////////////
+  //i have a high-density pixel display, i'm optimizing
+  pixelDensity(1);
+  //////////////end//////////////
   rectMode(CENTER);
   noStroke();
-  fill(fgColor);
 
   setupPaddles();
   setupBall();
@@ -98,12 +118,18 @@ function setup() {
 // Sets the positions of the two paddles
 function setupPaddles() {
   // Initialise the left paddle
+  /////////////new////////////
+  //added push/pop and new fill values for each paddle
+  //////end////////////////
+
   leftPaddle.x = paddleInset;
   leftPaddle.y = height/2;
 
   // Initialise the right paddle
+
   rightPaddle.x = width - paddleInset;
   rightPaddle.y = height/2;
+
 }
 
 // setupBall()
@@ -196,7 +222,17 @@ function handleInput(paddle) {
 function updatePosition(object) {
   object.x += object.vx;
   object.y += object.vy;
-}
+
+  ////////////////new/////////////
+  //wraps objects in case they go off top or bottom of screen
+  if (object.y - object.h/2 < 0) {
+   object.y += height
+  }
+  else if (object.y + object.h/2 > height) {
+    object.y -= height
+   }
+  }
+
 
 // handleBallWallCollision()
 //
@@ -247,6 +283,29 @@ function handleBallPaddleCollision(paddle) {
       // Play our bouncing sound effect by rewinding and then playing
       beepSFX.currentTime = 0;
       beepSFX.play();
+
+      ////////////////new/////////////////
+      //adds a point to the paddle's score, and alters its colour value accordinlgy
+     if (ball.x > width/2) {
+        rightPaddle.rebounds += 1;
+        rightPaddle.g += 20;
+        rightPaddle.b += 20;
+
+        }
+      else if (ball.x < width/2) {
+      leftPaddle.rebounds += 1;
+       leftPaddle.r +=20;
+       leftPaddle.b += 20;
+
+      }
+
+      if (rightPaddle.b > 255) {
+        rightPaddle.b = 0;
+        }
+      else if (leftPaddle.r > 255) {
+        leftPaddle.r = 0;
+        }
+
     }
   }
 }
@@ -278,18 +337,17 @@ function handleBallOffScreen() {
     // This is where we would count points etc!
 
     /////////////new////////////////
-    //resets paddle score to 0
+    //resets paddle score and original colour value
 
   if (ballLeft < 0) {
-
-    leftPaddle.rebounds = 0;
+    resetPaddle(leftPaddle);
   }
   else if (ballRight > width) {
-    rightPaddle.rebounds = 0; 
+    resetPaddle(rightPaddle);
   }
   }
   }
-}
+
 
 // displayBall()
 //
@@ -302,5 +360,19 @@ function displayBall() {
 //
 // Draws the specified paddle on screen based on its properties
 function displayPaddle(paddle) {
+  //////////////new/////////////
+  //added new fill vallue that can be particularized to a paddle
+  ///////////////end//////////////
+  fill(paddle.r,paddle.g,paddle.b);
   rect(paddle.x,paddle.y,paddle.w,paddle.h);
 }
+
+///////////new//////////////
+//resets colour value and score of paddle
+function resetPaddle(paddle) {
+  paddle.rebounds = 0;
+  paddle.r = paddle.origR;
+  paddle.g = paddle.origG;
+  paddle.b = paddle.origB;
+}
+/////////////////////end/////////////////////
