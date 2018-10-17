@@ -261,8 +261,14 @@ function handleBallOffScreen() {
   var ballLeft = ball.x - ball.size/2;
   var ballRight = ball.x + ball.size/2;
 
+  /////////////////new///////////////////
+  //switched around ballLeft and ballRight below because it seems to me that
+  //it's ballLeft that would end up smaller than the origin and ballRight
+  //that would end up further than the width...
+  ///////////end//////////////////
+
   // Check for ball going off the sides
-  if (ballRight < 0 || ballLeft > width) {
+  if (ballLeft < 0 || ballRight > width) {
     // If it went off either side, reset it to the centre
     ball.x = width/2;
     ball.y = height/2;
@@ -270,6 +276,18 @@ function handleBallOffScreen() {
     // carries on moving with the same velocity after its
     // position is reset.
     // This is where we would count points etc!
+
+    /////////////new////////////////
+    //resets paddle score to 0
+
+  if (ballLeft < 0) {
+
+    leftPaddle.rebounds = 0;
+  }
+  else if (ballRight > width) {
+    rightPaddle.rebounds = 0; 
+  }
+  }
   }
 }
 
