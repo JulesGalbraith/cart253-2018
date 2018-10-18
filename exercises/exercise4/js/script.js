@@ -86,6 +86,9 @@ var rightPaddle = {
 
 // A variable to hold the beep sound we will play on bouncing
 var beepSFX;
+//////////new//////////////
+//a variable to check which side the ball went offscreen through
+var side;
 
 // preload()
 //
@@ -224,7 +227,7 @@ function updatePosition(object) {
   object.y += object.vy;
 
   ////////////////new/////////////
-  //wraps objects in case they go off top or bottom of screen
+  //wraps paddles in case they go off top or bottom of screen
   if (object.y - object.h/2 < 0) {
    object.y += height
   }
@@ -284,28 +287,7 @@ function handleBallPaddleCollision(paddle) {
       beepSFX.currentTime = 0;
       beepSFX.play();
 
-      ////////////////new/////////////////
-      //adds a point to the paddle's score, and alters its colour value accordinlgy
-     if (ball.x > width/2) {
-        rightPaddle.rebounds += 1;
-        rightPaddle.g += 20;
-        rightPaddle.b += 20;
-
-        }
-      else if (ball.x < width/2) {
-      leftPaddle.rebounds += 1;
-       leftPaddle.r +=20;
-       leftPaddle.b += 20;
-
-      }
-
-      if (rightPaddle.b > 255) {
-        rightPaddle.b = 0;
-        }
-      else if (leftPaddle.r > 255) {
-        leftPaddle.r = 0;
-        }
-
+      updatePaddle();
     }
   }
 }
@@ -337,13 +319,17 @@ function handleBallOffScreen() {
     // This is where we would count points etc!
 
     /////////////new////////////////
-    //resets paddle score and original colour value
-
+    //resets paddle score and original colour value, sends ball to the opposite
+    //paddle it missed at a random y velocity
   if (ballLeft < 0) {
+    side = 1;
     resetPaddle(leftPaddle);
+    resetBall();
   }
   else if (ballRight > width) {
+    side = -1
     resetPaddle(rightPaddle);
+    resetBall();
   }
   }
   }
@@ -367,12 +353,44 @@ function displayPaddle(paddle) {
   rect(paddle.x,paddle.y,paddle.w,paddle.h);
 }
 
+
 ///////////new//////////////
-//resets colour value and score of paddle
+//alters colour value of paddle if a point is scored
+function updatePaddle() {
+
+     if (ball.x > width/2) {
+        rightPaddle.rebounds += 1;
+        rightPaddle.g += 20;
+        rightPaddle.b += 20;
+
+        }
+      else if (ball.x < width/2) {
+      leftPaddle.rebounds += 1;
+       leftPaddle.r +=20;
+       leftPaddle.b += 20;
+
+      }
+
+      if (rightPaddle.b > 255) {
+        rightPaddle.b = 0;
+        }
+      else if (leftPaddle.r > 255) {
+        leftPaddle.r = 0;
+        }
+
+}
+//resets colour value and score of paddle, and velocity of ball
 function resetPaddle(paddle) {
   paddle.rebounds = 0;
   paddle.r = paddle.origR;
   paddle.g = paddle.origG;
   paddle.b = paddle.origB;
+}
+
+//resets ball
+function resetBall() {
+  ball.vx = side*ball.speed;
+  ball.vy = random(-10,10);
+
 }
 /////////////////////end/////////////////////
