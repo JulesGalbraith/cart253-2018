@@ -5,7 +5,7 @@
 // just the ability to play the game with the keyboard.
 
 // Game colors
-var bgColor = 0;
+//var bgColor = map(noise(0.2),0,1,0,255);
 /////////new///////////
 //deleted fgColor
 
@@ -16,11 +16,10 @@ var bgColor = 0;
 var ball = {
   x: 0,
   y: 0,
-  size: 20,
+  size: 40,
   vx: 0,
   vy: 0,
   speed: 5
-
 }
 
 // PADDLES
@@ -48,11 +47,11 @@ var leftPaddle = {
   rebounds: 0,
   //colour values, original and mutable
   origR:0,
-  origG:50,
-  origB:150,
+  origG:30,
+  origB:120,
   r: 0,
-  g: 50,
-  b: 150
+  g: 20,
+  b: 120
   /////end///////////
 }
 
@@ -75,26 +74,44 @@ var rightPaddle = {
   //checks the right paddle's score
   rebounds: 0,
   //colour values
-  origR: 100,
-  origG: 50,
-  origB: 0,
-  r: 100,
-  g: 50,
-  b: 0
+  origR: 80,
+  origG: 100,
+  origB: 50,
+  r: 60,
+  g: 100,
+  b: 50
   /////end///////////
 }
 
 // A variable to hold the beep sound we will play on bouncing
 var beepSFX;
 //////////new//////////////
-//a variable to check which side the ball went offscreen through
+//variables to check which side the ball went offscreen through, and to
+//tally the score
 var side;
+var leftPoints = 0;
+var rightPoints = 0;
+
+// a variable naming the font used
+var ballFont;
+var beep;
+var boop;
+
+// a variable holding the time at which the background's noise function is sampled
+var bgColour;
+var backgroundT = 0;
+
+//variable tracking gameOver
+
+var gameLost = false;
+
 
 // preload()
 //
 // Loads the beep audio for the sound of bouncing
 function preload() {
   beepSFX = new Audio("assets/sounds/beep.wav");
+  ballFont = loadFont("assets/fonts/virgo.ttf");
 }
 
 // setup()
@@ -149,8 +166,9 @@ function setupBall() {
 //
 // Calls the appropriate functions to run the game
 function draw() {
-  // Fill the background
-  background(bgColor);
+  ///////////////new//////////////////
+  //the background shifts in a greyscale according to the noise function
+  setupBackground();
 
   // Handle input
   // Notice how we're using the SAME FUNCTION to handle the input
@@ -177,6 +195,8 @@ function draw() {
   displayPaddle(leftPaddle);
   displayPaddle(rightPaddle);
   displayBall();
+
+  gameOver();
 }
 
 
@@ -325,11 +345,13 @@ function handleBallOffScreen() {
     side = 1;
     resetPaddle(leftPaddle);
     resetBall();
+    rightPoints += 1;
   }
   else if (ballRight > width) {
     side = -1
     resetPaddle(rightPaddle);
     resetBall();
+    leftPoints +=1;
   }
   }
   }
@@ -339,7 +361,21 @@ function handleBallOffScreen() {
 //
 // Draws ball on screen based on its properties
 function displayBall() {
-  rect(ball.x,ball.y,ball.size,ball.size);
+/////////////////new/////////////////
+//turns the ball into a word that reads 'beep' in one direction and 'boop' in
+//the other
+textFont(ballFont);
+textSize(ball.size);
+textAlign(CENTER);
+push();
+fill(255,0,50);
+  if (ball.vx > 0) {
+  beep = text("beep",ball.x,ball.y,ball.size,ball.size);
+}
+else if (ball.vx < 0) {
+  boop = text("boop",ball.x,ball.y,ball.size,ball.size)
+}
+pop();
 }
 
 // displayPaddle(paddle)
@@ -348,9 +384,11 @@ function displayBall() {
 function displayPaddle(paddle) {
   //////////////new/////////////
   //added new fill vallue that can be particularized to a paddle
-  ///////////////end//////////////
+  push();
   fill(paddle.r,paddle.g,paddle.b);
+  //////////////end//////////////////
   rect(paddle.x,paddle.y,paddle.w,paddle.h);
+  pop();
 }
 
 
@@ -393,4 +431,54 @@ function resetBall() {
   ball.vy = random(-10,10);
 
 }
+
+//sets up background colour to change according to a noise value
+
+function setupBackground() {
+
+  bgColour = (map(noise(backgroundT),0,1,0,255));
+  background(bgColour);
+  backgroundT += 0.01
+
+  if (bgColour > 255) {
+    bgColour -= 100;
+  }
+}
+
+//sets the condition for game over- if either side loses 10 times- and sets
+//a game over screen
+
+ function gameOver() {
+
+
+   if (leftPoints > 1 || rightPoints > 1) {
+
+     gameLost = true;
+
+     push();
+     background(0);
+     textSize(60);
+     textFont(ballFont);
+     fill(random(200,255),15,random(10,50));
+
+     text("GAME OVER :C",width/2, height/2);
+     pop();
+
+     push();
+     textSize(20);
+     textFont(ballFont);
+     fill(random(200,255),15,random(10,50));
+     text("press enter to beeoopboopbeep again",width/2,300);
+     pop();
+   }
+ }
+
+ function keyPressed() {
+   if (keyCode === ENTER && gameLost){
+     location.reload();
+   }
+ }
+
+
+
 /////////////////////end/////////////////////
