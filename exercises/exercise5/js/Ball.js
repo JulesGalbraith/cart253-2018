@@ -65,9 +65,23 @@ Ball.prototype.isOffScreen = function () {
 //
 // Draw the ball as a rectangle on the screen
 Ball.prototype.display = function () {
-  fill(255);
-  rect(this.x,this.y,this.size,this.size);
+  /////////////////new/////////////////
+//turns the ball into a word that reads 'beep' in one direction and 'boop' in
+//the other
+textFont(wordFont);
+textSize(this.size);
+textAlign(CENTER);
+push();
+fill(255,0,50);
+  if (this.vx > 0) {
+  beep = text("beep",this.x,this.y,this.size,this.size);
 }
+else if (ball.vx < 0) {
+  boop = text("boop",this.x,this.y,this.size,this.size)
+}
+pop();
+}
+
 
 // handleCollision(paddle)
 //
