@@ -43,6 +43,9 @@ Ball.prototype.update = function () {
 // Checks if the ball has moved off the screen and, if so, returns true.
 // Otherwise it returns false.
 Ball.prototype.isOffScreen = function () {
+  /////////////////new//////////////////////
+  //split conjuctive statement into two if statements in order to check which
+  //side the ball went off
   // Check for going off screen and reset if so
   if (this.x + this.size < 0) {
     this.side = 1;
@@ -56,6 +59,7 @@ Ball.prototype.isOffScreen = function () {
     return false;
   }
 }
+//////////end///////////////
 
 // display()
 //
@@ -79,8 +83,10 @@ Ball.prototype.handleCollision = function(paddle) {
       this.y -= this.vy;
       // Reverse x velocity to bounce
       this.vx = -this.vx;
-
+////////////new/////////////////
+//calls the paddle's handle collision function
       paddle.handleCollision();
+      /////////////////end//////////////////
     }
   }
 }
@@ -95,7 +101,5 @@ Ball.prototype.reset = function() {
   //resets ball velocity to random value
   this.vx = this.side*this.speed;
   this.vy = random(-10,10);
-
-
-
 }
+///////////////end///////////////////

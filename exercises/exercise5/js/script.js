@@ -14,6 +14,11 @@ var ball;
 var leftPaddle;
 var rightPaddle;
 
+//////////new/////////////////
+//variables for background colour
+var bgColour;
+var backgroundT = 0.01;
+
 // setup()
 //
 // Creates the ball and paddles
@@ -40,7 +45,9 @@ function setup() {
 // Handles input, updates all the elements, checks for collisions
 // and displays everything.
 function draw() {
-  background(0);
+
+  setupBackground();
+  noStroke();
 
   leftPaddle.handleInput();
   rightPaddle.handleInput();
@@ -50,14 +57,14 @@ function draw() {
   rightPaddle.update();
 
   if (ball.isOffScreen()) {
-
+///////new/////////////////////
+//added if statement specifying which paddle to reset
     if (ball.x < 0){
     leftPaddle.reset();
     }
     if (ball.x + ball.size > width) {
     rightPaddle.reset();
 
-    console.log("why?");
     }
 
     ball.reset();
@@ -70,5 +77,17 @@ function draw() {
   leftPaddle.display();
   rightPaddle.display();
 
+}
 
+function setupBackground() {
+
+  push();
+  bgColour = (map(noise(backgroundT),0,1,0,255));
+  background(bgColour);
+  backgroundT += 0.01
+
+  if (bgColour > 255) {
+    bgColour -= 100;
+  }
+  pop();
 }

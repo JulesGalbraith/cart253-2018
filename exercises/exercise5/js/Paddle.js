@@ -98,3 +98,4 @@ Paddle.prototype.reset = function () {
   this.losses += 1;
 
 }
+////////////////end/////////////////////////
