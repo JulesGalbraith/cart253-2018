@@ -19,6 +19,13 @@ var rightPaddle;
 var bgColour;
 var backgroundT = 0.01;
 
+//tracks whether game is gameLost
+var gameLost = false;
+
+
+function preload() {
+  wordFont = loadFont("assets/fonts/virgo.ttf");
+}
 // setup()
 //
 // Creates the ball and paddles
@@ -77,6 +84,7 @@ function draw() {
   leftPaddle.display();
   rightPaddle.display();
 
+  gameOver();
 }
 
 function setupBackground() {
@@ -91,3 +99,29 @@ function setupBackground() {
   }
   pop();
 }
+
+
+//conditions for game over and screen
+function gameOver() {
+   if (leftPaddle.losses > 10 || rightPaddle.losses > 10) {
+
+     gameLost = true;
+
+     textAlign(CENTER);
+
+     push();
+     background(0);
+     textSize(60);
+     textFont(wordFont);
+     fill(random(200,255),15,random(10,50));
+     text("GAME OVER :C",width/2, height/2);
+     pop();
+
+     push();
+     textSize(20);
+     textFont(wordFont);
+     fill(random(200,255),15,random(10,50));
+     text("press enter to beeoopboopbeep again",width/2,300);
+     pop();
+   }
+ }
