@@ -14,6 +14,9 @@ function Ball(x,y,vx,vy,size,speed) {
   this.vy = vy;
   this.size = size;
   this.speed = speed;
+  //////new///////////
+  //determines the side to return
+  this.side = 0;
 }
 
 // update()
@@ -41,7 +44,12 @@ Ball.prototype.update = function () {
 // Otherwise it returns false.
 Ball.prototype.isOffScreen = function () {
   // Check for going off screen and reset if so
-  if (this.x + this.size < 0 || this.x > width) {
+  if (this.x + this.size < 0) {
+    this.side = 1;
+    return true;
+  }
+  if (this.x + this.size > width) {
+    this.side = -1;
     return true;
   }
   else {
@@ -71,6 +79,8 @@ Ball.prototype.handleCollision = function(paddle) {
       this.y -= this.vy;
       // Reverse x velocity to bounce
       this.vx = -this.vx;
+
+      paddle.handleCollision();
     }
   }
 }
@@ -78,7 +88,14 @@ Ball.prototype.handleCollision = function(paddle) {
 // reset()
 //
 // Set position back to the middle of the screen
-Ball.prototype.reset = function () {
+Ball.prototype.reset = function() {
   this.x = width/2;
   this.y = height/2;
+  //////new////////////
+  //resets ball velocity to random value
+  this.vx = this.side*this.speed;
+  this.vy = random(-10,10);
+
+
+
 }

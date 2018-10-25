@@ -22,12 +22,17 @@ function setup() {
   // Create a ball
   ball = new Ball(width/2,height/2,5,5,10,5);
   // Create the right paddle with UP and DOWN as controls
+  ///////////////new/////////////////////
+  //added new definitions representing colour values. I put them on a separate
+  //line because the object was getting long- i don't know if this is
+  //overly clunky?
   rightPaddle = new Paddle(width-10,height/2,10,60,10,DOWN_ARROW,UP_ARROW,
-                          80,100,50,60,100,50);
+                          60,100,50,0,20,100);
   // Create the left paddle with W and S as controls
   // Keycodes 83 and 87 are W and S respectively
   leftPaddle = new Paddle(0,height/2,10,60,10,83,87,
-                          0,30,120,0,30,120);
+                          0,30,120,20,0,120);
+                          //////////////end////////////////
 }
 
 // draw()
@@ -45,6 +50,16 @@ function draw() {
   rightPaddle.update();
 
   if (ball.isOffScreen()) {
+
+    if (ball.x < 0){
+    leftPaddle.reset();
+    }
+    if (ball.x + ball.size > width) {
+    rightPaddle.reset();
+
+    console.log("why?");
+    }
+
     ball.reset();
   }
 
@@ -54,4 +69,6 @@ function draw() {
   ball.display();
   leftPaddle.display();
   rightPaddle.display();
+
+
 }
