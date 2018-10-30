@@ -29,6 +29,7 @@ Paddle.prototype.handleInput = function() {
     this.vy = -this.speed;
   }
   else if (keyDown(downKey)) {
+//////////fixed//////////////////
     this.vy = this.speed;
   }
 }
@@ -44,6 +45,7 @@ Paddle.prototype.update = function() {
 // display()
 //
 // Draw the paddle as a rectangle on the screen
+////////////////fixed////////////////////
 Paddle.prototype.display = function() {
   rect(this.x,this.y,this.w,this.h);
 }

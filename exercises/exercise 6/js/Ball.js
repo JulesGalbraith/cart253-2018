@@ -24,7 +24,8 @@ function Ball(x,y,vx,vy,size,speed) {
 //////////////fixed/////////////////
 Ball.prototype.update = function () {
   // Update position with velocity
-  this.x = this.vx;
+  /////fixed/////////
+  this.x += this.vx;
   this.y += this.vy;
 
   // Constrain y position to be on screen
@@ -42,6 +43,7 @@ Ball.prototype.update = function () {
 // Otherwise it returns false.
 Ball.prototype.isOffScreen = function () {
   // Check for going off screen and reset if so
+  /////////////////////fixed//////////////
   if (this.x + this.size < 0 && this.x > width) {
     return true;
   }
