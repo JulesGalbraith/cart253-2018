@@ -58,7 +58,7 @@ Ball.prototype.isOffScreen = function () {
 Ball.prototype.display = function () {
   //////////////fixed/////////////////
   fill(255);
-  rect(this.x,this.y,this.size);
+  rect(this.x,this.y,this.size,this.size);
 }
 
 // handleCollision(paddle)
