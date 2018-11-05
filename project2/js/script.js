@@ -10,22 +10,23 @@
 // Written with JavaScript OOP.
 
 // Variable to contain the objects representing our ball and paddles
-var ball;
-var leftPaddle;
-var rightPaddle;
+var elon;
+var mars;
+var earth;
 
 // setup()
 //
 // Creates the ball and paddles
 function setup() {
   createCanvas(windowWidth,windowHeight,WEBGL);
+  noStroke();
   // Create a ball
-  ball = new Ball(width/2,height/2,5,5,10,5);
+  elon = new Ball(width/2,height/2,5,5,10,5);
   // Create the right paddle with UP and DOWN as controls
-  rightPaddle = new Paddle(width-10,height/2,10,60,10,DOWN_ARROW,UP_ARROW);
+  earth = new Paddle(700,height/2,30,10,DOWN_ARROW,UP_ARROW);
   // Create the left paddle with W and S as controls
   // Keycodes 83 and 87 are W and S respectively
-  leftPaddle = new Paddle(0,height/2,10,60,10,83,87);
+  mars = new Paddle(100,height/2,10,30,83,87);
 }
 
 // draw()
@@ -35,21 +36,21 @@ function setup() {
 function draw() {
   background(0);
 
-  leftPaddle.handleInput();
-  rightPaddle.handleInput();
+  earth.handleInput();
+  mars.handleInput();
 
-  ball.update();
-  leftPaddle.update();
-  rightPaddle.update();
+  elon.update();
+  earth.update();
+  mars.update();
 
-  if (ball.isOffScreen()) {
-    ball.reset();
+  if (elon.isOffScreen()) {
+    elon.reset();
   }
 
-  ball.handleCollision(leftPaddle);
-  ball.handleCollision(rightPaddle);
+  elon.handleCollision(earth);
+  elon.handleCollision(mars);
 
-  ball.display();
-  leftPaddle.display();
-  rightPaddle.display();
+  elon.display();
+  earth.display();
+  mars.display();
 }

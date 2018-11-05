@@ -12,7 +12,7 @@ function Ball(x,y,vx,vy,size,speed) {
   this.y = y;
   this.vx = vx;
   this.vy = vy;
-  this.size = size;
+  this.size = size
   this.speed = speed;
 }
 
