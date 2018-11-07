@@ -1,32 +1,42 @@
-// Basic OO Pong
-// by Pippin Barr
+//Elon and the Restlessness of the Interplanetary Migrant
+// by Pippin Barr and Jules Galbraith
 //
-// A primitive implementation of Pong with no scoring system
-// just the ability to play the game with the keyboard.
 //
 // Arrow keys control the right hand paddle, W and S control
 // the left hand paddle.
 //
 // Written with JavaScript OOP.
 
-// Variable to contain the objects representing our ball and paddles
+/////////new/////////////////
+// Variable to contain the objects representing elon musk, earth, and mars
 var elon;
 var mars;
 var earth;
+
+////////new///////////////////
+//loads images for ball avatar, as well as textures for earth and mars ellipsoids
+function preload () {
+  elon = loadImage("assets/images/elon.png");
+  earthTex = loadImage("assets/images/earthTexture.jpg");
+  marsTex = loadImage("assets/images/marsTexture.jpg");
+}
 
 // setup()
 //
 // Creates the ball and paddles
 function setup() {
-  createCanvas(windowWidth,windowHeight,WEBGL);
+  //////////new/////////////
+  //canvas is the size of the window, and 3d is enabled
+  createCanvas(1200,800,WEBGL);
   noStroke();
-  // Create a ball
-  elon = new Ball(width/2,height/2,5,5,10,5);
-  // Create the right paddle with UP and DOWN as controls
-  earth = new Paddle(700,height/2,30,10,DOWN_ARROW,UP_ARROW);
-  // Create the left paddle with W and S as controls
+  // Let elon musk be our ball
+  elon = new Ball(width/2,height/2,5,5,elon,30,5);
+  // Create earth on the right, with UP and DOWN as controls
+  earth = new Paddle(80,height/2,50,10,83,87,earthTex);
+  // Create mars on the left, with W and S as controls
   // Keycodes 83 and 87 are W and S respectively
-  mars = new Paddle(100,height/2,10,30,83,87);
+  mars = new Paddle(width-80,height/2,50,10,DOWN_ARROW,UP_ARROW,marsTex);
+  console.log(mars.y, earth.y)
 }
 
 // draw()
@@ -34,6 +44,7 @@ function setup() {
 // Handles input, updates all the elements, checks for collisions
 // and displays everything.
 function draw() {
+  translate(-width/2,-height/2);
   background(0);
 
   earth.handleInput();

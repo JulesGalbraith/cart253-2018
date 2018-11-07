@@ -6,16 +6,16 @@
 // Paddle constructor
 //
 // Sets the properties with the provided arguments or defaults
-function Paddle(x,y,size,speed,downKey,upKey) {
+function Paddle(x,y,size,speed,downKey,upKey,imgTexture) {
   this.x = x;
   this.y = y;
-  this.z = 0;
   this.vx = 0;
   this.vy = 0;
   this.size = size;
   this.speed = speed;
   this.downKey = downKey;
   this.upKey = upKey;
+  this.imgTexture = imgTexture;
 }
 
 // handleInput()
@@ -39,14 +39,18 @@ Paddle.prototype.handleInput = function() {
 // Constrain the resulting position to be within the canvas
 Paddle.prototype.update = function() {
   this.y += this.vy;
-  this.y = constrain(this.y,0,height-this.h);
+  ///////neww/////////////////
+  //constrains y position according to the new origin point as dictated by webgl
+  this.y = constrain(this.y,0-height,height-this.size);
 }
 
 // display()
 //
-// Draw the paddle as a rectangle on the screen
+// Draw the paddle as a 3d globe on the screen
 Paddle.prototype.display = function() {
-  fill(255);
-  translate(this.x,this.z,this.y);
+  push();
+  translate(this.x,this.y,0);
+  texture(this.imgTexture);
   ellipsoid(this.size,this.size,this.size);
+  pop();
 }

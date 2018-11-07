@@ -7,13 +7,17 @@
 // Ball constructor
 //
 // Sets the properties with the provided arguments
-function Ball(x,y,vx,vy,size,speed) {
+function Ball(x,y,vx,vy,imgTexture,size,speed) {
   this.x = x;
   this.y = y;
   this.vx = vx;
   this.vy = vy;
-  this.size = size
+  this.size = size;
   this.speed = speed;
+  this.imgTexture = imgTexture;
+  this.rotateAngleX = 0;
+  this.rotateAngleY = 0;
+  this.rotateAngleZ = 0;
 }
 
 // update()
@@ -53,8 +57,20 @@ Ball.prototype.isOffScreen = function () {
 //
 // Draw the ball as a rectangle on the screen
 Ball.prototype.display = function () {
-  fill(255);
-  rect(this.x,this.y,this.size,this.size);
+  push();
+  translate(this.x,this.y,)
+  //rotates ball
+
+    rotateX(this.rotateAngleX);
+    rotateY(this.rotateAngleY);
+    rotateZ(this.rotateAngleZ);
+
+   this.rotateAngleX += 0.02;
+    this.rotateAngleY += 0.03;
+  //  this.rotateAngleZ += 0.006;
+  texture(this.imgTexture);
+  ellipsoid(this.size,this.size,this.size);
+  pop();
 }
 
 // handleCollision(paddle)
@@ -62,23 +78,23 @@ Ball.prototype.display = function () {
 // Check if this ball overlaps the paddle passed as an argument
 // and if so reverse x velocity to bounce
 Ball.prototype.handleCollision = function(paddle) {
-  // Check if the ball overlaps the paddle on x axis
-  if (this.x + this.size > paddle.x && this.x < paddle.x + paddle.w) {
-    // Check if the ball overlaps the paddle on y axis
-    if (this.y + this.size > paddle.y && this.y < paddle.y + paddle.h) {
-      // If so, move ball back to previous position (by subtracting current velocity)
+  var distance = dist(this.x,this.y,paddle.x,paddle.y);
+
+//check if the distance between the centres of the spheres is less than the sum
+//of their radii, detecting a collision
+  if (distance < this.size/2 + paddle.size/2) {
       this.x -= this.vx;
       this.y -= this.vy;
       // Reverse x velocity to bounce
       this.vx = -this.vx;
     }
-  }
+  //}
 }
 
 // reset()
 //
 // Set position back to the middle of the screen
 Ball.prototype.reset = function () {
-  this.x = width/2;
-  this.y = height/2;
+  this.x = 0;
+  this.y = 0;
 }
