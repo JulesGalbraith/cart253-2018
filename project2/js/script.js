@@ -12,6 +12,18 @@
 var elon;
 var mars;
 var earth;
+var starField;
+
+//creates coordinates for starry welcome screen background
+var numStars = 1000;
+var starX;
+var starY;
+
+//creates truth-functonal variables for welcome, game, and end of game screens
+
+var welcomeScreen = true;
+var inGame = false;
+var gameOver = false;
 
 ////////new///////////////////
 //loads images for ball avatar, as well as textures for earth and mars ellipsoids
@@ -19,34 +31,57 @@ function preload () {
   elon = loadImage("assets/images/elon.png");
   earthTex = loadImage("assets/images/earthTexture.jpg");
   marsTex = loadImage("assets/images/marsTexture.jpg");
+  starField = loadImage("assets/images/starryBackground.jpg");
 }
 
-// setup()
 //
 // Creates the ball and paddles
 function setup() {
   //////////new/////////////
   //canvas is the size of the window, and 3d is enabled
   createCanvas(1200,800,WEBGL);
-  noStroke();
+  background(0);
   // Let elon musk be our ball
   elon = new Ball(width/2,height/2,5,5,elon,30,5);
-  // Create earth on the right, with UP and DOWN as controls
+  // Create earth on the left, with S and W as controls
   earth = new Paddle(80,height/2,50,10,83,87,earthTex);
-  // Create mars on the left, with W and S as controls
-  // Keycodes 83 and 87 are W and S respectively
+  // Create mars on the right, with UP and DOWN as controls
   mars = new Paddle(width-80,height/2,50,10,DOWN_ARROW,UP_ARROW,marsTex);
-  console.log(mars.y, earth.y)
+
 }
 
 // draw()
 //
 // Handles input, updates all the elements, checks for collisions
 // and displays everything.
+
 function draw() {
   translate(-width/2,-height/2);
   background(0);
 
+//creates a starry field for the welcome screen
+if (welcomeScreen) {
+  for (i=0; i < numStars; i++) {
+    starX = random(width);
+    starY = random(height);
+
+    push();
+    fill(random(150,255));
+    strokeWeight(1);
+    stroke(255);
+    line(starX,starY,starX+1,starY);
+    pop();
+  }
+}
+
+ else if (inGame) {
+
+//backbround image
+push();
+ translate(width/2,height/2);
+   texture(starField);
+   plane(width,height);
+pop();
   earth.handleInput();
   mars.handleInput();
 
@@ -61,7 +96,17 @@ function draw() {
   elon.handleCollision(earth);
   elon.handleCollision(mars);
 
-  elon.display();
-  earth.display();
-  mars.display();
+ elon.display();
+ earth.display();
+ mars.display();
+  }
+
+}
+
+// handles input on welcome and end of game screens
+function keyReleased() {
+  if (keyCode === 32) {
+    inGame = true;
+    welcomeScreen = false;
+  }
 }
