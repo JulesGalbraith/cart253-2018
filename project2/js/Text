@@ -1,0 +1,3 @@
+function Text("text",size,x,y) {
+
+}

@@ -82,19 +82,20 @@ Ball.prototype.handleCollision = function(paddle) {
 
 //check if the distance between the centres of the spheres is less than the sum
 //of their radii, detecting a collision
-  if (distance < this.size/2 + paddle.size/2) {
+  if (distance < this.size + paddle.size/2) {
       this.x -= this.vx;
       this.y -= this.vy;
       // Reverse x velocity to bounce
       this.vx = -this.vx;
     }
-  //}
 }
 
 // reset()
 //
 // Set position back to the middle of the screen
+////////new/////////////
+//changed origin point to reflect webgl format
 Ball.prototype.reset = function () {
-  this.x = 0;
-  this.y = 0;
+  this.x = width/2;
+  this.y = height/2 ;
 }
