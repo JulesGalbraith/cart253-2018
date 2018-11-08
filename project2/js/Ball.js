@@ -71,7 +71,7 @@ Ball.prototype.display = function () {
 
    this.rotateAngleX += 0.02;
     this.rotateAngleY += 0.03;
-  //  this.rotateAngleZ += 0.006;
+   this.rotateAngleZ += 0.006;
   texture(this.imgTexture);
   ellipsoid(this.size,this.size,this.size);
   pop();
@@ -86,12 +86,11 @@ Ball.prototype.handleCollision = function(paddle) {
 
 //check if the distance between the centres of the spheres is less than the sum
 //of their radii, detecting a collision
-  if (distance < this.size + paddle.size/2) {
+  if (distance < this.size + paddle.size) {
       this.x -= this.vx;
       this.y -= this.vy;
       // Reverse x velocity to bounce
       this.vx = -this.vx;
-      this.vy = -this.vy;
     }
 }
 

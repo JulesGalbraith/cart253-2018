@@ -8,11 +8,14 @@
 // Written with JavaScript OOP.
 
 /////////new/////////////////
-// Variable to contain the objects representing elon musk, earth, and mars
+// Variables containing the images used as textures on various objects
 var elon;
 var mars;
 var earth;
 var starField;
+var dollars;
+var bitcoin;
+var riyal;
 
 //creates coordinates for starry welcome screen background
 var numStars = 300;
@@ -22,6 +25,11 @@ var starY;
 //arrays tracking earth's and mars' respective lives
 var earthLives = [];
 var marsLives = [];
+
+//array containing objects representing currency for elon to collect
+var currencyTypes= [];
+var moneyObjects = [];
+var numMoneyObjs = 30;
 
 var welcomeText;
 
@@ -43,6 +51,11 @@ function preload () {
   //fonts
   titleFont = loadFont("assets/fonts/Merkur.otf");
   infoFont = loadFont("assets/fonts/ElectroShackle.otf");
+  //loads images of currency for elon to collect
+  dollars =loadImage("assets/images/50DollarBill.JPG");
+  bitcoin = loadImage("assets/images/bitcoin.png");
+  riyal = loadImage("assets/images/saudiRiyal.jpg");
+
 }
 
 //
@@ -66,6 +79,13 @@ function setup() {
   }
   for (i = 0; i < mars.score; i++) {
     marsLives.push(new Ball((width-20) - 30*i,30,0,0,marsTex,10,0));
+  }
+
+  //for loops creating money for elon musk to collect
+  currencyTypes = [dollars,bitcoin,riyal];
+  for (i = 0; i < numMoneyObjs; i ++) {
+    var moneyIndex = floor(random(0,currencyTypes.length));
+    moneyObjects.push(new Investment(width/2,100*i,50,random(5,10),random(-5,5),random(-5,5),currencyTypes[moneyIndex]));
   }
 
 //creates explanatory text on welcome screen
@@ -160,7 +180,16 @@ pop();
   marsLives[i].display();
    }
 
- }
+  for (i = 0; i < moneyObjects.length; i ++) {
+
+  if (moneyObjects[i].isDisplayed) {
+  moneyObjects[i].display();
+    }
+    moneyObjects[i].handleCollision(elon);
+    moneyObjects[i].update();
+   }
+  }
+
 }
 /////////new////////////////
 // handles input on welcome and end of game screens
@@ -181,13 +210,11 @@ function trackScore() {
   if (elon.isOffScreen() === -1) {
     earth.score -- ;
     earthLives.pop();
-    console.log(earthLives.length);
   }
 
 if (elon.isOffScreen() === 1 ) {
   mars.score -- ;
   marsLives.pop();
-  console.log(marsLives.length);
     }
 }
 

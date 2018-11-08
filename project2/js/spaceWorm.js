@@ -32,3 +32,12 @@ Worm.prototype.handleCollision = function(paddle) {
     paddle.score- 1;
   }
 }
+
+Worm.prototype.display = function() {
+  push();
+  translate(this.x,this.y);
+  fill(random(200,255));
+  cylinder(this.r,this.l,true,true);
+  pop();
+
+}
