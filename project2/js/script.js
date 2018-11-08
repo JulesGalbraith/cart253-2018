@@ -20,8 +20,10 @@ var starX;
 var starY;
 
 //arrays tracking earth's and mars' respective lives
-var earthLives[];
-var marsLives[];
+var earthLives = [];
+var marsLives = [];
+
+var welcomeText;
 
 //creates truth-functonal variables for welcome, game, and end of game screens
 var welcomeScreen = true;
@@ -39,7 +41,7 @@ function preload () {
   //game background
   starField = loadImage("assets/images/starryBackground.jpg");
   //fonts
-  titleFont = loadFont("assets/fonts/virgo.ttf");
+  titleFont = loadFont("assets/fonts/Merkur.otf");
   infoFont = loadFont("assets/fonts/ElectroShackle.otf");
 }
 
@@ -48,37 +50,47 @@ function preload () {
 function setup() {
   //////////new/////////////
   //canvas is the size of the window, and 3d is enabled
-  createCanvas(1200,800,WEBGL);
+  createCanvas(windowWidth,windowHeight,WEBGL);
   background(0);
   // Let elon musk be our ball
-  elon = new Ball(width/2,height/2,5,5,elon,45,10);
+  elon = new Ball(width/2,height/2,5,5,elon,45,15);
   // Create earth on the left, with S and W as controls
   earth = new Paddle(85,height/2,65,10,83,87,earthTex);
   // Create mars on the right, with UP and DOWN as controls
   mars = new Paddle(width-85,height/2,65,10,DOWN_ARROW,UP_ARROW,marsTex);
 
   /////////new////////
-  //for loops creating balls represening earth's and mars' marsLives
-  for (i = 0; i < 11, i++){
-    earthLives.push(new Ball(20*i,height-20,0,0,earthTex,10,0));
-    marsLives.push(new Ball(width-20*1,height-20,0,0,marsTex,10,0))
+  //for loops creating balls represening earth's and mars' lLives
+  for (i = 0; i < earth.score; i++) {
+    earthLives.push(new Ball(20 + 30*i,30,0,0,earthTex,10,0));
+  }
+  for (i = 0; i < mars.score; i++) {
+    marsLives.push(new Ball((width-20) - 30*i,30,0,0,marsTex,10,0));
   }
 
+//creates explanatory text on welcome screen
+welcomeText = createGraphics(1500,2000);
+welcomeText.textAlign(CENTER);
+push();
+welcomeText.textSize(100);
+welcomeText.textFont(titleFont);
+welcomeText.fill(252, 255, 127);
+welcomeText.text("ELON: INTERPLANETARY MIGRANT",width/2,height/2);
+welcomeText.text("PRESS SPACE TO BEGIN",width/2, height/2+ 700);
+pop();
 
-  //creates text as a graphic
-  //push();
-  //title = createGraphics(width,height);
-  //title.textAlign(CENTER);
-  //title.textSize(200);
-  //title.fill(200);
-//  title.textFont(titleFont);
-//  title.text("ELON, INTERPLANETARY MIGRANT",width/2,height/20);
-//  console.log("hi");
-//  pop();
+push();
+welcomeText.textSize(50);
+welcomeText.textFont(infoFont);
+welcomeText.fill(255);
+welcomeText.text("Elon Musk is hopping from Earth to Mars", width/2, height/2 + 150);
+welcomeText.text("unfortunately, neither planet", width/2, height/2 + 200);
+welcomeText.text("wishes to be responible for him", width/2, height/2 + 250);
+welcomeText.text("S/W control Earth, UP/DOWN control Mars",width/2, height/2 + 500);
+pop();
 }
 
 // draw()
-
 // Handles input, updates all the elements, checks for collisions
 // and displays everything.
 
@@ -102,6 +114,13 @@ if (welcomeScreen) {
     line(starX,starY,starX+1,starY);
     pop();
     }
+
+    push();
+    translate(width/2,height*0.6);
+    fill(255,0,0);
+    texture(welcomeText);
+    plane(1000,1000);
+    pop();
 }
 
 //deploys if space bar is pressed
@@ -120,6 +139,7 @@ pop();
   elon.update();
   earth.update();
   mars.update();
+  trackScore();
 
   if (elon.isOffScreen()) {
     elon.reset();
@@ -132,16 +152,16 @@ pop();
  earth.display();
  mars.display();
  /////////new////////////
- //displays earth and mars' mars
+ //displays earth and mars' lives
  for (i = 0; i < earthLives.length; i++) {
- earthLives.display();
+ earthLives[i].display();
   }
   for (i = 0; i < marsLives.length; i++) {
-  marsLives.display();
+  marsLives[i].display();
    }
 
+ }
 }
-
 /////////new////////////////
 // handles input on welcome and end of game screens
 function keyReleased() {
@@ -155,13 +175,21 @@ function keyReleased() {
   }
 }
 
+//tracks score and removes one life from the losing side
 function trackScore() {
 
-  if (elon.ballIsOffscreen && "Earth loses!") {
-    earth.score - 1;
+  if (elon.isOffScreen() === -1) {
+    earth.score -- ;
+    earthLives.pop();
+    console.log(earthLives.length);
   }
-if (elon.ballIsOffscreen && "Mars loses!" )
-  mars.score -1;
+
+if (elon.isOffScreen() === 1 ) {
+  mars.score -- ;
+  marsLives.pop();
+  console.log(marsLives.length);
+    }
 }
+
 
 ///////////////nrw/////////////

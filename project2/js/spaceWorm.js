@@ -1,3 +1,7 @@
+//creates a worm wiggling around space that may or may not be a visual metaphor for
+//the Boring company and a more abstract metaphor for the tech oligarchy's drive to
+//forge ahead, extract and exploit with solipsistic disregard
+
 function Worm (r,l,speed) {
   this.x = x;
   this.y = y;
@@ -21,10 +25,10 @@ Worm.prototype.update = function() {
 
 Worm.prototype.handleCollision = function(paddle) {
 
-  var distance = dist(this.x,this.y,paddle.x,paddle.y);
+  var distanceWorm2Planet = dist(this.x,this.y,paddle.x,paddle.y);
 
-  if(distance < this.l + paddle.size) {
+  if(distanceWorm2Planet < this.l + paddle.size) {
     paddle.size - 5;
-    paddle.score-1;
+    paddle.score- 1;
   }
 }
