@@ -31,6 +31,9 @@ var currencyTypes= [];
 var moneyObjects = [];
 var numMoneyObjs = 30;
 
+//variable containing an object which will collide with the planets, to their detriment
+var aBoringWorm;
+
 var welcomeText;
 
 //creates truth-functonal variables for welcome, game, and end of game screens
@@ -87,6 +90,10 @@ function setup() {
     var moneyIndex = floor(random(0,currencyTypes.length));
     moneyObjects.push(new Investment(width/2,100*i,50,random(5,10),random(-5,5),random(-5,5),currencyTypes[moneyIndex]));
   }
+
+  //creates a space worm/ metaphor for resource extraction that damages whichever planet it
+  //runs into, decreasing speed and removing a life
+   aBoringWorm = new Worm(width/2,height/2,10,100,20);
 
 //creates explanatory text on welcome screen
 welcomeText = createGraphics(1500,2000);
@@ -184,11 +191,16 @@ pop();
 
   if (moneyObjects[i].isDisplayed) {
   moneyObjects[i].display();
-    }
+      }
     moneyObjects[i].handleCollision(elon);
     moneyObjects[i].update();
-   }
-  }
+    }
+
+   aBoringWorm.update();
+   aBoringWorm.handleCollision(earth);
+   aBoringWorm.handleCollision(mars);
+   aBoringWorm.display();
+ }
 
 }
 /////////new////////////////
@@ -197,7 +209,7 @@ function keyReleased() {
   if (welcomeScreen && keyCode === 32) {
     inGame = true;
     welcomeScreen = false;
-  }
+      }
   if (gameOver && keyCode === ENTER){
     inGame = true;
     welcomeScreen = false;
@@ -218,5 +230,8 @@ if (elon.isOffScreen() === 1 ) {
     }
 }
 
+function gameOver() {
+  
+}
 
 ///////////////nrw/////////////

@@ -18,10 +18,10 @@ Investment.prototype.update = function() {
   this.vx = this.speed*noise(this.time);
   this.vy = this.speed*noise(this.time);
 
-  this.x += this.vx;
+  this.x += random(-5,5)*this.vx;
   this.y += this.vy;
 
-  this.time += 0.02
+  this.time += 0.01
 
   //wraps the object to the screen
 
