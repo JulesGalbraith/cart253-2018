@@ -16,6 +16,7 @@ function Paddle(x,y,size,speed,downKey,upKey,imgTexture) {
   this.downKey = downKey;
   this.upKey = upKey;
   this.imgTexture = imgTexture;
+  this.score = 11;
 }
 
 // handleInput()

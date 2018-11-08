@@ -15,19 +15,19 @@ var earth;
 var starField;
 
 //creates coordinates for starry welcome screen background
-var numStars = 1000;
+var numStars = 300;
 var starX;
 var starY;
 
-//creates truth-functonal variables for welcome, game, and end of game screens
+//arrays tracking earth's and mars' respective lives
+var earthLives[];
+var marsLives[];
 
+//creates truth-functonal variables for welcome, game, and end of game screens
 var welcomeScreen = true;
 var inGame = false;
 var gameOver = false;
 
-//font names
-var titleFont;
-var infoFont;
 ////////new///////////////////
 //loads images for ball avatar, as well as textures for earth and mars ellipsoids
 function preload () {
@@ -57,10 +57,28 @@ function setup() {
   // Create mars on the right, with UP and DOWN as controls
   mars = new Paddle(width-85,height/2,65,10,DOWN_ARROW,UP_ARROW,marsTex);
 
+  /////////new////////
+  //for loops creating balls represening earth's and mars' marsLives
+  for (i = 0; i < 11, i++){
+    earthLives.push(new Ball(20*i,height-20,0,0,earthTex,10,0));
+    marsLives.push(new Ball(width-20*1,height-20,0,0,marsTex,10,0))
+  }
+
+
+  //creates text as a graphic
+  //push();
+  //title = createGraphics(width,height);
+  //title.textAlign(CENTER);
+  //title.textSize(200);
+  //title.fill(200);
+//  title.textFont(titleFont);
+//  title.text("ELON, INTERPLANETARY MIGRANT",width/2,height/20);
+//  console.log("hi");
+//  pop();
 }
 
 // draw()
-//
+
 // Handles input, updates all the elements, checks for collisions
 // and displays everything.
 
@@ -84,17 +102,7 @@ if (welcomeScreen) {
     line(starX,starY,starX+1,starY);
     pop();
     }
-
-  //title and instruction text
-  textAlign(CENTER);
-  push();
-  stroke(255);
-  fill(100);
-  textFont(titleFont);
-  text("ELON THE INTERPLANETARY MIGRANT",width*0.5,height*0.2);
-  pop();
-
-  }
+}
 
 //deploys if space bar is pressed
  else if (inGame) {
@@ -123,7 +131,14 @@ pop();
  elon.display();
  earth.display();
  mars.display();
+ /////////new////////////
+ //displays earth and mars' mars
+ for (i = 0; i < earthLives.length; i++) {
+ earthLives.display();
   }
+  for (i = 0; i < marsLives.length; i++) {
+  marsLives.display();
+   }
 
 }
 
@@ -139,3 +154,14 @@ function keyReleased() {
     welcomeScreen = false;
   }
 }
+
+function trackScore() {
+
+  if (elon.ballIsOffscreen && "Earth loses!") {
+    earth.score - 1;
+  }
+if (elon.ballIsOffscreen && "Mars loses!" )
+  mars.score -1;
+}
+
+///////////////nrw/////////////
