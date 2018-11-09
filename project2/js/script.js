@@ -35,6 +35,7 @@ var numMoneyObjs = 30;
 var aBoringWorm;
 
 var welcomeText;
+var gameOverText;
 
 //creates truth-functonal variables for welcome, game, and end of game screens
 var welcomeScreen = true;
@@ -93,28 +94,29 @@ function setup() {
 
   //creates a space worm/ metaphor for resource extraction that damages whichever planet it
   //runs into, decreasing speed and removing a life
-   aBoringWorm = new Worm(width/2,height/2,10,100,20);
+  aBoringWorm = new Worm(width/2,height/2,10,100,20);
 
-//creates explanatory text on welcome screen
-welcomeText = createGraphics(1500,2000);
-welcomeText.textAlign(CENTER);
-push();
-welcomeText.textSize(100);
-welcomeText.textFont(titleFont);
-welcomeText.fill(252, 255, 127);
-welcomeText.text("ELON: INTERPLANETARY MIGRANT",width/2,height/2);
-welcomeText.text("PRESS SPACE TO BEGIN",width/2, height/2+ 700);
-pop();
+  //creates explanatory text on welcome screen
+  welcomeText = createGraphics(1500,2000);
+  welcomeText.textAlign(CENTER);
+  push();
+  welcomeText.textSize(100);
+  welcomeText.textFont(titleFont);
+  welcomeText.fill(252, 255, 127);
+  welcomeText.text("ELON: INTERPLANETARY MIGRANT",width/2,height/2);
+  welcomeText.text("PRESS SPACE TO BEGIN",width/2, height/2+ 700);
+  pop();
 
-push();
-welcomeText.textSize(50);
-welcomeText.textFont(infoFont);
-welcomeText.fill(255);
-welcomeText.text("Elon Musk is hopping from Earth to Mars", width/2, height/2 + 150);
-welcomeText.text("unfortunately, neither planet", width/2, height/2 + 200);
-welcomeText.text("wishes to be responible for him", width/2, height/2 + 250);
-welcomeText.text("S/W control Earth, UP/DOWN control Mars",width/2, height/2 + 500);
-pop();
+  push();
+  welcomeText.textSize(50);
+  welcomeText.textFont(infoFont);
+  welcomeText.fill(255);
+  welcomeText.text("Elon Musk is hopping from Earth to Mars", width/2, height/2 + 150);
+  welcomeText.text("unfortunately, neither planet", width/2, height/2 + 200);
+  welcomeText.text("wishes to be responible for him", width/2, height/2 + 250);
+  welcomeText.text("S/W control Earth, UP/DOWN control Mars",width/2, height/2 + 500);
+  pop();
+
 }
 
 // draw()
@@ -127,81 +129,85 @@ function draw() {
   translate(-width/2,-height/2);
   background(0);
 
-//creates a starry field for the welcome screen
-if (welcomeScreen) {
+  //creates a starry field for the welcome screen
+  if (welcomeScreen) {
 
-  for (i=0; i < numStars; i++) {
-    starX = random(width);
-    starY = random(height);
+    for (i=0; i < numStars; i++) {
+      starX = random(width);
+      starY = random(height);
 
-    push();
-    fill(random(150,255));
-    strokeWeight(1);
-    stroke(255);
-    line(starX,starY,starX+1,starY);
-    pop();
+      push();
+      fill(random(150,255));
+      strokeWeight(1);
+      stroke(255);
+      line(starX,starY,starX+1,starY);
+      pop();
     }
 
     push();
     translate(width/2,height*0.6);
-    fill(255,0,0);
     texture(welcomeText);
     plane(1000,1000);
     pop();
-}
-
-//deploys if space bar is pressed
- else if (inGame) {
-//background is a static starry field
-push();
- translate(width/2,height/2);
-   texture(starField);
-   plane(width,height);
-pop();
-
-//handles gameplay
-  earth.handleInput();
-  mars.handleInput();
-
-  elon.update();
-  earth.update();
-  mars.update();
-  trackScore();
-
-  if (elon.isOffScreen()) {
-    elon.reset();
   }
 
-  elon.handleCollision(earth);
-  elon.handleCollision(mars);
+  //deploys if space bar is pressed
+  if (inGame) {
+    //background is a static starry field
+    push();
+    translate(width/2,height/2);
+    texture(starField);
+    plane(width,height);
+    pop();
 
- elon.display();
- earth.display();
- mars.display();
- /////////new////////////
- //displays earth and mars' lives
- for (i = 0; i < earthLives.length; i++) {
- earthLives[i].display();
-  }
-  for (i = 0; i < marsLives.length; i++) {
-  marsLives[i].display();
-   }
+    //handles gameplay
+    earth.handleInput();
+    mars.handleInput();
 
-  for (i = 0; i < moneyObjects.length; i ++) {
+    elon.update();
+    earth.update();
+    mars.update();
+    trackScore();
 
-  if (moneyObjects[i].isDisplayed) {
-  moneyObjects[i].display();
-      }
-    moneyObjects[i].handleCollision(elon);
-    moneyObjects[i].update();
+    if (elon.isOffScreen()) {
+      elon.reset();
     }
 
-   aBoringWorm.update();
-   aBoringWorm.handleCollision(earth);
-   aBoringWorm.handleCollision(mars);
-   aBoringWorm.display();
- }
+    elon.handleCollision(earth);
+    elon.handleCollision(mars);
 
+    elon.display();
+    earth.display();
+    mars.display();
+    /////////new////////////
+    //displays earth and mars' lives
+    for (i = 0; i < earthLives.length; i++) {
+      earthLives[i].display();
+    }
+    for (i = 0; i < marsLives.length; i++) {
+      marsLives[i].display();
+    }
+
+    for (i = 0; i < moneyObjects.length; i ++) {
+
+      if (moneyObjects[i].isDisplayed) {
+        moneyObjects[i].display();
+      }
+      moneyObjects[i].handleCollision(elon);
+      moneyObjects[i].update();
+    }
+
+    aBoringWorm.update();
+    aBoringWorm.handleCollision(earth);
+    aBoringWorm.handleCollision(mars);
+    aBoringWorm.display();
+
+    trackScore();
+    }
+
+    if (gameOver) {
+      gameIsOver();
+    }
 }
 /////////new////////////////
 // handles input on welcome and end of game screens
@@ -209,10 +215,9 @@ function keyReleased() {
   if (welcomeScreen && keyCode === 32) {
     inGame = true;
     welcomeScreen = false;
-      }
+  }
   if (gameOver && keyCode === ENTER){
-    inGame = true;
-    welcomeScreen = false;
+   location.reload();
   }
 }
 
@@ -222,16 +227,55 @@ function trackScore() {
   if (elon.isOffScreen() === -1) {
     earth.score -- ;
     earthLives.pop();
+    console.log(earthLives.length);
   }
 
-if (elon.isOffScreen() === 1 ) {
-  mars.score -- ;
-  marsLives.pop();
-    }
+  if (elon.isOffScreen() === 1 ) {
+    mars.score -- ;
+    marsLives.pop();
+    console.log(marsLives.length);
+  }
+
+  if (earthLives.length === 0|| marsLives.length === 0) {
+  gameOver = true;
+  inGame = false;
 }
 
-function gameOver() {
-  
 }
+
+function gameIsOver() {
+
+    background(random(10,50));
+
+    endGameText = createGraphics(1500,2000);
+    endGameText.textAlign(CENTER);
+    push();
+    endGameText.textSize(100);
+    endGameText.textFont(titleFont);
+    endGameText.fill(252, 255, 127);
+    endGameText.text("GAME OVER", width/2, height/3);
+    endGameText.text("THE PLANETS HAVE LOST.",width/2,height/2);
+    endGameText.text("PRESS ENTER TO TRY AGAIN",width/2, height/2+ 700);
+    pop();
+
+    push();
+    endGameText.textSize(50);
+    endGameText.textFont(infoFont);
+    endGameText.fill(255);
+    endGameText.text("Elon Musk has established his colonies", width/2, height/2 + 150);
+    endGameText.text("earth, abandoned to its fate,", width/2, height/2 + 200);
+    endGameText.text("is being milked for its final resources", width/2, height/2 + 250);
+    endGameText.text("and will shortly be little more than a husk",width/2, height/2 + 500);
+    pop();
+
+
+      push();
+      translate(width/2,height*0.7);
+      texture(endGameText);
+      plane(1000,1000);
+      pop();
+  }
+
+
 
 ///////////////nrw/////////////
