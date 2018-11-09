@@ -13,6 +13,8 @@ function Worm (x,y,r,l,speed) {
   this.angle = 0;
 }
 
+
+//worm moves according to a jittery sine function
 Worm.prototype.update = function() {
   this.vy = (this.speed*sin(30*PI*this.angle))/2;
   this.vx += 0.01;
@@ -38,6 +40,8 @@ Worm.prototype.update = function() {
   }
 }
 
+
+// if the worm runs in to either planet, its size decreases
 Worm.prototype.handleCollision = function(paddle) {
 
   var distanceWorm2Planet = dist(this.x,this.y,paddle.x,paddle.y);
@@ -48,6 +52,8 @@ Worm.prototype.handleCollision = function(paddle) {
   }
 }
 
+
+//displays the worm as a subtly flickering white cylinder
 Worm.prototype.display = function() {
   push();
   noStroke();

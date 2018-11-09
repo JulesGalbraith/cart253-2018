@@ -1,3 +1,4 @@
+
 //drops money and other goodies around the canvas for the ball to collect, increasing its speed
 
 function Investment(x,y,size,speed,vx,vy,image) {
@@ -13,7 +14,7 @@ this.angle = 0;
 this.isDisplayed = true;
 }
 
-//the money hovers wiggles around a bit, moving according to a noise function
+//the money disperses loosesly according to a noise function
 Investment.prototype.update = function() {
   this.vx = this.speed*noise(this.time);
   this.vy = this.speed*noise(this.time);
@@ -39,7 +40,8 @@ Investment.prototype.update = function() {
   }
 }
 
-//if the elon runs into the money, he gains in speed
+//if the elon runs into the money, he gains in speed. this function only applies
+//to array elements that are displayed (as opposed to invisible)
 Investment.prototype.handleCollision = function(ball) {
 
   if (this.isDisplayed){
@@ -53,7 +55,7 @@ Investment.prototype.handleCollision = function(ball) {
   }
 }
 
-//the money rotates very slightly, just for added flair
+//the money is displayed as a texture on a plane. it rotates very slightly, just for added flair. 
 
 Investment.prototype.display = function() {
   push();

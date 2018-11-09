@@ -34,6 +34,8 @@ var numMoneyObjs = 30;
 //variable containing an object which will collide with the planets, to their detriment
 var aBoringWorm;
 
+
+//variables referring to text in welcome screen and game over screen
 var welcomeText;
 var gameOverText;
 
@@ -93,7 +95,7 @@ function setup() {
   }
 
   //creates a space worm/ metaphor for resource extraction that damages whichever planet it
-  //runs into, decreasing speed and removing a life
+  //runs into, decreasing its size
   aBoringWorm = new Worm(width/2,height/2,10,100,20);
 
   //creates explanatory text on welcome screen
@@ -180,7 +182,7 @@ function draw() {
     earth.display();
     mars.display();
     /////////new////////////
-    //displays earth and mars' lives
+    //array displaying earth and mars' lives
     for (i = 0; i < earthLives.length; i++) {
       earthLives[i].display();
     }
@@ -188,6 +190,7 @@ function draw() {
       marsLives[i].display();
     }
 
+//array containing objects that our ball can collide with to increase in speed
     for (i = 0; i < moneyObjects.length; i ++) {
 
       if (moneyObjects[i].isDisplayed) {
@@ -197,14 +200,17 @@ function draw() {
       moneyObjects[i].update();
     }
 
+// handles and displays a white worm that damages whichever planet it runs into
     aBoringWorm.update();
     aBoringWorm.handleCollision(earth);
     aBoringWorm.handleCollision(mars);
     aBoringWorm.display();
 
+//tracks the score of both planets. evaluates to gameOver if either score reaches 0
     trackScore();
     }
 
+//displays game over screen if gameOver evaluates to true
     if (gameOver) {
       gameIsOver();
     }
@@ -236,6 +242,8 @@ function trackScore() {
     console.log(marsLives.length);
   }
 
+//checks if either array holding small spheres representing the planets lives
+//is empty. sets game to over if so
   if (earthLives.length === 0|| marsLives.length === 0) {
   gameOver = true;
   inGame = false;
@@ -243,10 +251,14 @@ function trackScore() {
 
 }
 
+
+//displays game over screen
 function gameIsOver() {
 
+//background flickers ominously
     background(random(10,50));
 
+//end of game text decrying the end of the world
     endGameText = createGraphics(1500,2000);
     endGameText.textAlign(CENTER);
     push();

@@ -46,6 +46,8 @@ Ball.prototype.update = function () {
 Ball.prototype.isOffScreen = function () {
   // Check for going off screen and reset if so
   if (this.x + this.size < 0) {
+    ////new////////
+    //checks which side the ball has gone offscreen on
     return -1;
 }
   if (this.x > width) {
@@ -63,8 +65,8 @@ Ball.prototype.isOffScreen = function () {
 Ball.prototype.display = function () {
   push();
   translate(this.x,this.y,)
-  //rotates ball
 
+  //rotates ball to better see elon's face
     rotateX(this.rotateAngleX);
     rotateY(this.rotateAngleY);
     rotateZ(this.rotateAngleZ);
