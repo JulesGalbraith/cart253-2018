@@ -41,11 +41,11 @@ User.prototype.handleInput = function() {
     this.vx = 0;
   }
 
-
-
+//updates user location
   this.x += this.vx;
   this.y += this.vy;
 
+//constrains user location to inside the canvas
   this.x = constrain(this.x,0,width);
   this.y = constrain(this.y,0,height);
 
@@ -54,9 +54,11 @@ console.log(this.x);
 
 User.prototype.display = function() {
 
+//users size varies according to a noise function
   this.size = this.size + map(noise(this.t),0,1,-1,1);
   this.size = constrain(this.size,10,50);
 
+//user is a white torus who rotates in space
   push();
   fill(255);
   stroke(200);
