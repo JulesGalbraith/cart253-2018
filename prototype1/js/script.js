@@ -7,7 +7,7 @@ var clicks = 0;
 var guidance = [];
 
 function setup(){
-  createCanvas(windowWidth,800,WEBGL);
+  createCanvas(windowWidth,windowHeight,WEBGL);
 //creates a lost user, floating in a void of sorts, seaching for direction
   lostSoul = new User(width/2,height/2,10,0,0,10,UP_ARROW,DOWN_ARROW,LEFT_ARROW,RIGHT_ARROW);
 
