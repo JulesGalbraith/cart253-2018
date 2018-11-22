@@ -1,4 +1,4 @@
-new Phrase (x,y,vx,vy,size) {
+function Phrase (x,y,vx,vy,size) {
   this.x = x;
   this.y = y;
   this.vx = vx;
@@ -20,7 +20,7 @@ Phrase.prototype.display = function() {
     "noli mi tangere",
     "humanity is engaged in a long game of bloody knuckles",
     "every thought activates a particular neural pathway; be aware of your thoughts, and which pathways are growing",
-    "every habit is located in a cluster of co-dependent cells"
+    "every habit is located in a cluster of co-dependent cells",
     "all bodies have something in common",
     "fracture and refraction are the true processes of self-formation",
     "the categories by which the social world is ordered produce entire worlds of unspeakability",
