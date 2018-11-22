@@ -2,18 +2,18 @@ new Phrase (x,y,vx,vy,size) {
   this.x = x;
   this.y = y;
   this.vx = vx;
-  this.speed = 10;
-  this.size = size;
 }
 
 Phrase.prototype.updatePosition = function () {
-  this.vx += 1;
-  this.vy += 1;
-
+  this.vx -= 1;
+  this.x = this.vx;
+  this.y = random()
 }
-Phrase.prototype.display = function() {
 
-  var textGraohic = createGraphics(windowWidth,200);
+Phrase.prototype.display = function() {
+  var w = windowWidth;
+  var h = 200;
+  var textGraphic = createGraphics(w,h);
 
   var displayedPhrase = [
     "lorem ipsum",
@@ -32,7 +32,15 @@ Phrase.prototype.display = function() {
     "professionalism is a construct intented to devalue outsider knowledge"]
 
     push();
-    fill(255);
-    noStroke();
-    textSize(50);
+    textGraphic.fill(255);
+    textGraphic.noStroke();
+    textGraphic.textSize(50);
+
+    textGraphic.text(displayedPhrase[random(i)],w/2,h/2);
+
+    texture(textGraphic)
+    translate(this.x,this.y,0);
+    ellipsoid(windowWidth/2,200,20);
+
+    pop();
 }
