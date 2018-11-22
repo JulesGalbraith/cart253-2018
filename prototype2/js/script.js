@@ -31,14 +31,15 @@ var displayedPhrases = [
   "don't activate those pathways",
   "every habit is located in a cluster of co-dependent cells",
   "all bodies have something in common",
-  "fracture and refraction are the true processes of self-formation",
-  "the order of the social world produces worlds of unspeakability",
+  "fracture and refraction are processes of self-formation",
+  "the order of the social world produces unspeakable subjects",
   "knowledge is creation is power- thinking is prior to being",
   "isaac newton slaps the roof of a car - the roof slaps back",
-  "what is the nature of your fantasy/ imagination produces reality",
-  "compassion for its own sake is directly challenges neoliberalism",
+  "what is the nature of your fantasy",
+  "imagination produces reality",
+  "compassion for its own sake directly challenges neoliberalism",
   "self-satisfaction is a direct resistance to capitalism",
-  "professionalism is a construct intented to devalue outsider knowledge"]
+  "professionalism is a construct devaluing outsider knowledge"]
 
 
 function setup(){
@@ -49,11 +50,14 @@ function setup(){
 //creates user-controlled red ball; uses arrow keys to move
  user = new User(width/2,height/2,LEFT_ARROW,RIGHT_ARROW,UP_ARROW,DOWN_ARROW);
 
+//creats new guide spheres
+setupGuides();
 //creates new phrase objects, to be displayed when the user collides with a guide
  for (i = 0; i < displayedPhrases.length; i++ ) {
    phrase.push (new Phrase(width,random(0,height),5));
    phrase[i].createTextGraphic();
  }
+
 }
 
 function draw(){
@@ -65,7 +69,7 @@ user.moveUser();
 user.displayUser();
 
 //creates a new phrase each time a guide is hit. the phrase will scroll backwards across the screen
-for (i = 0; i< guidesHit; i++) {
+for (i = 0; i < guidesHit; i++) {
   phrase[i].display();
   phrase[i].updatePosition();
 }
@@ -74,6 +78,35 @@ displayGuides();
 }
 
 //creates four columns of white spheres that trigger scrolling nuggets of knowledge, advice or inanity when hit
+function setupGuides() {
+
+//spacing between spheres
+var offset = 400;
+ var guideSize = 100
+
+//creates and indexes each new guide
+  for (i = 0 ; i < 5; i++) {
+  guides.push(new Guide(width/5,(guideIndex+1)*offset,guideSize));
+  guideIndex += 1;
+    }
+
+  for (i = 5 ; i < 10; i++) {
+  guides.push(new Guide(2*width/5,(guideIndex-4)*offset,guideSize));
+  guideIndex += 1;
+    }
+
+  for (i = 10; i < 15; i++) {
+  guides.push(new Guide(3*width/5,(guideIndex-9)*offset,guideSize));
+  guideIndex += 1;
+    }
+
+  for (i = 15; i < 20; i++) {
+  guides.push(new Guide(4*width/5,(guideIndex-14)*offset,guideSize));
+  guideIndex += 1;
+    }
+}
+
+//displays each new guide
 function displayGuides() {
 
 //spacing between spheres
@@ -81,29 +114,21 @@ var offset = 400;
  var guideSize = 100
 
   for (i = 0 ; i < 5; i++) {
-  guides.push(new Guide(width/5,(guideIndex+1)*offset,guideSize));
-  guideIndex += 1;
   guides[i].display();
   guides[i].encounter(user);
     }
 
   for (i = 5 ; i < 10; i++) {
-  guides.push(new Guide(2*width/5,(guideIndex-4)*offset,guideSize));
-  guideIndex += 1;
   guides[i].display();
   guides[i].encounter(user);
     }
 
   for (i = 10; i < 15; i++) {
-  guides.push(new Guide(3*width/5,(guideIndex-9)*offset,guideSize));
-  guideIndex += 1;
   guides[i].display();
   guides[i].encounter(user);
     }
 
   for (i = 15; i < 20; i++) {
-  guides.push(new Guide(4*width/5,(guideIndex-14)*offset,guideSize));
-  guideIndex += 1;
   guides[i].display();
   guides[i].encounter(user);
     }

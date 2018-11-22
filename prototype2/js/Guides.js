@@ -35,8 +35,12 @@ Guide.prototype.encounter = function(user){
   var distance = dist(this.x,this.y,user.x,user.y);
 //detects collision
   if (distance < (this.size/2 + user.size/2) && this.createPhrase === true) {
+
 //tracks how many guides have been hit, triggering a corresponding phrase to appear
-    guidesHit += 1;
+  if (guidesHit < displayedPhrases.length){
+        guidesHit += 1;
+        }
+
     //guide is no longer displayed
     this.displayGuide = false;
     //once this is called, no further phrases are created from this particular instance of collision

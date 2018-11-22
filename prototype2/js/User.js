@@ -7,7 +7,7 @@ function User(x,y,leftKey,rightKey,upKey,downKey) {
   this.size = 50;
   this.vx =width/2;
   this.vy = height/2;
-  this.speed = 5;
+  this.speed = 10;
   this.upKey = upKey;
   this.downKey = downKey;
   this.leftKey = leftKey;
