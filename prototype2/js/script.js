@@ -1,4 +1,15 @@
 
+//Unsolicited Opinions; a speculative environment
+
+//by jules
+
+//user controls the red ball with arrow keys: the white balls, if encountered, will
+//trigger the appearance of a nice fragment of pseudo-intellectual but kinda heartwarming
+//dialogue, simulating the general informationally saturated reality of human interaction online
+
+
+
+
 //the length of each column of "guides", ie floating balls that dispense knowledge
 //when the user runs into them
 var numGuides = 5;
