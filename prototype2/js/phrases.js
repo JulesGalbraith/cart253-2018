@@ -1,46 +1,40 @@
-function Phrase (x,y,vx,vy,size) {
+function Phrase (x,y,vx) {
   this.x = x;
   this.y = y;
   this.vx = vx;
+  this.size = 200;
+  this.text = floor(random(displayedPhrases.length));
+  this.textGraphic;
+  this.w = windowWidth/2;
+  this.h = this.size;
 }
 
 Phrase.prototype.updatePosition = function () {
-  this.vx -= 1;
-  this.x = this.vx;
-  this.y = random()
+ this.x -= this.vx;
 }
 
 Phrase.prototype.display = function() {
-  var w = windowWidth;
-  var h = 200;
-  var textGraphic = createGraphics(w,h);
 
-  var displayedPhrase = [
-    "lorem ipsum",
-    "noli mi tangere",
-    "humanity is engaged in a long game of bloody knuckles",
-    "every thought activates a particular neural pathway; be aware of your thoughts, and which pathways are growing",
-    "every habit is located in a cluster of co-dependent cells",
-    "all bodies have something in common",
-    "fracture and refraction are the true processes of self-formation",
-    "the categories by which the social world is ordered produce entire worlds of unspeakability",
-    "knowledge is creation is power- thinking is prior to being",
-    "isaac newton slaps the roof of a car - the roof slaps back",
-    "what is the nature of your fantasy/ imagination produces reality",
-    "love/ compassion for its own sake is a direct challenge to neoliberalism",
-    "self-satisfaction is a direct resistance to capitalism",
-    "professionalism is a construct intented to devalue outsider knowledge"]
+   push();
+    translate(this.x,this.y,0);
+    angleMode(DEGREES);
+    texture(this.textGraphic)
+   //rotateY(millis()/1);
+    plane(20*this.size,this.size);
+    pop();
+}
+
+Phrase.prototype.createTextGraphic = function () {
+
+  this.textGraphic = createGraphics(this.w,this.h);
 
     push();
-    textGraphic.fill(255);
-    textGraphic.noStroke();
-    textGraphic.textSize(50);
+    //this.textGraphic.background(0,0,255,100);
+    this.textGraphic.fill(255);
+    this.textGraphic.noStroke();
+    this.textGraphic.textSize(70);
+    this.textGraphic.textAlign(CENTER);
 
-    textGraphic.text(displayedPhrase[random(i)],w/2,h/2);
-
-    texture(textGraphic)
-    translate(this.x,this.y,0);
-    ellipsoid(windowWidth/2,200,20);
-
+    this.textGraphic.text(displayedPhrases[this.text],this.w/2,this.h/2);
     pop();
 }

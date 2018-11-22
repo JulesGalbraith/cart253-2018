@@ -2,8 +2,8 @@
 
 function User(x,y,leftKey,rightKey,upKey,downKey) {
   this.x = x;
-  this.y =y;
-  this.size = 30;
+  this.y = y;
+  this.size = 50;
   this.vx =width/2;
   this.vy = height/2;
   this.speed = 5;
@@ -17,9 +17,9 @@ User.prototype.displayUser = function () {
 
   push();
   translate(this.x,this.y,0)
-  noStroke();
-  fill(255,0,0,200);
-  
+  //noStroke();
+  fill(255,0,0,150);
+
   ellipsoid(this.size,this.size,this.size);
   pop();
 }
