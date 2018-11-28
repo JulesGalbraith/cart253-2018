@@ -4,62 +4,69 @@ var numGuides = 5;
 var guideIndex = 0;
 var guides = [];
 var user;
-var wecome;
+var welcome;
+var inGame = false;
+var atWelcomeScreen = true;
+var welcomePlane;
+var welcomeFont;
 
+
+function preload() {
+  welcomeFont = loadFont("assets/fonts/BebasNeueLight.otf");
+}
 
 function setup(){
 
   createCanvas(windowWidth,windowHeight,WEBGL);
-  background(0);
-
-  user = new User(width/2,height/2);
 }
+
 
 function draw(){
 
-moveUser();
-displayUser();
-displayGuides();
-
-}
-
-function displayGuides() {
-
- translate (-width/2,-height/3);
-
-  for (i = 0 ; i < 5; i++) {
-  guides.push(new Guide(width/5,guideIndex*150,20));
-  guideIndex += 1;
-  guides[i].display();
+  if (atWelcomeScreen) {
+    welcomeScreen();
   }
+  if (inGame) {
 
-  for (i = 5 ; i < 10; i++) {
-  guides.push(new Guide(2*width/5,(guideIndex-5)*150,20));
-  guideIndex += 1;
-  guides[i].display();
-  }
+  background(0);
 
-  for (i = 10; i < 15; i++) {
-  guides.push(new Guide(3*width/5,(guideIndex-10)*150,20));
-  guideIndex += 1;
-  guides[i].display();
-  }
-
-  for (i = 15; i < 20; i++) {
-  guides.push(new Guide(4*width/5,(guideIndex-15)*150,20));
-  guideIndex += 1;
-  guides[i].display();
   }
 
 }
 
 
 function welcomeScreen() {
-  welcome = createGraphics(windowWidth, windowHeight);
+
+
+
+
+  welcome = createGraphics(width,height);
+
   push();
-  welcome.fill(255, 230, 221);
-  welcome.textSize(30);
+  welcome.background(random(10,50));
+  welcome.fill(255,230,221);
+  welcome.textFont(welcomeFont);
+  welcome.textSize(150);
   welcome.noStroke();
   welcome.textAlign(CENTER);
-  welcome.
+ welcome.text("it's okay to feel a little lost sometimes—",width/2,500);
+ welcome.text("quasi-solicited advice is just a click away!",width/2, 700);
+ welcome.text("is it welcome? is it wise?",width/2,1300);
+ welcome.text("the only way to know is to run headlong into it",width/2,1500);
+ welcome.text("press enter to begin",width/2,2000);
+  pop();
+
+
+  push();
+  texture(welcome);
+  welcomePlane = plane(windowWidth,windowHeight);
+  pop();
+}
+
+function keyPressed() {
+  if (keyCode(ENTER) && atWelcomeScreen) {
+
+    inGame = true;
+    atWelcomeScreen = false;
+  }
 }
