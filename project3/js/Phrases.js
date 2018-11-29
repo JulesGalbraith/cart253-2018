@@ -16,7 +16,7 @@ Phrase.prototype.updatePosition = function () {
  this.x -= this.vx;
 }
 
-//creates the plane
+//creates the plane upon which the graphic will appear
 Phrase.prototype.display = function() {
 
    push();
@@ -29,6 +29,7 @@ Phrase.prototype.display = function() {
 //draws a 2d canvas that text can appear on; to be used as a texture on the plane
 Phrase.prototype.createTextGraphic = function () {
 
+//creates graphic according to size paramenters given in brackets
   this.textGraphic = createGraphics(this.w,2*this.h/3);
 
     push();
@@ -41,10 +42,4 @@ Phrase.prototype.createTextGraphic = function () {
 //chooses from a global array of phrases to display
     this.textGraphic.text(displayedPhrases[this.text],this.w/2,this.h/2);
     pop();
-}
-
-Phrase.prototype.die = function () {
-  if (this.x < -width){
-  //  phrase.pop();
-  }
 }

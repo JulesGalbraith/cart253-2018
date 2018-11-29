@@ -51,7 +51,7 @@ User.prototype.handleInput = function() {
 
 User.prototype.display = function() {
 
-//users size varies according to a noise function
+//users size varies according to a noise function, making it appearing to breathe slightly
   this.size = this.size + map(noise(this.t),0,1,-1,1);
   this.size = constrain(this.size,30,100);
 
