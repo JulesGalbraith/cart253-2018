@@ -32,6 +32,7 @@ function draw(){
 
   }
 
+  keyPressed();
 }
 
 
@@ -64,9 +65,14 @@ function welcomeScreen() {
 }
 
 function keyPressed() {
-  if (keyCode(ENTER) && atWelcomeScreen) {
+  if (keyCode === (ENTER) && atWelcomeScreen) {
 
     inGame = true;
     atWelcomeScreen = false;
+    console.log("hi");
+  }
+
+  if (keyCode === SHIFT) {
+    location.reload();
   }
 }
