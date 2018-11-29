@@ -33,6 +33,7 @@ Phrase.prototype.createTextGraphic = function () {
   this.textGraphic = createGraphics(this.w,this.h);
 
     push();
+    this.textGraphic.background(0);
     this.textGraphic.fill(255);
     this.textGraphic.noStroke();
     this.textGraphic.textSize(70);

@@ -1,34 +1,57 @@
-function Phrase (x,y,size,r,g,b) {
-  this.x = x;
-  this.y = y;
-  this.size = size;
-  this.r = r;
-  this.g = g;
-  this.b = b;
-  this.shown = true;
-  this.angle = 0;
+//each guide is a white sphere
+function Guide(x,y,size,r,g,b) {
+this.x =x;
+this.y = y;
+this.size = size;
+this.r =r;
+this.g =g;
+this.b =b;
+this.angle = 0;
+this.displayGuide = true;
+this.createPhrase = true;
 }
 
-//displays a slowly rotating sphere
-Phrase.prototype.display = function() {
-
+Guide.prototype.display = function() {
+//object only displays if it has not been run into by the user
+if (this.displayGuide) {
   push();
-  translate(this.x-width/2,this.y-height/2,0);
-  stroke(255);
-  rotateY(this.angle);
-  strokeWeight(0.1);
-  fill(this.r,this.g,this.b);
+
+  fill(this.r,this.g,this.b)
+//  stroke(150);
+//  strokeWeight(1);
+ //noStroke();
+
+//guides rotate slowly for the sake of ambiance
+  translate(this.x,this.y,0);
+//  angleMode(DEGREES);
+//  rotateY(this.angle);
   ellipsoid(this.size,this.size,this.size);
+//  this.angle += 50;
   pop();
 
-  this.angle += 0.01;
+  }
 }
 
-//object disappears in the event it collides with the user
-Phrase.prototype.handleCollision = function(User) {
-  var distance = dist(this.x,this.y,User.x,User.y);
+Guide.prototype.encounter = function(user){
 
-  if (distance < this.size + User.size) {
-    this.shown = false;
+//calculates distance between respective centres of guide and user
+  var distance = dist(this.x,this.y,user.x,user.y);
+//detects collision
+  if (distance < (this.size/2 + user.size/2) && this.createPhrase === true) {
+
+//tracks how many guides have been hit, triggering a corresponding phrase to appear
+  if (guidesHit < displayedPhrases.length){
+        guidesHit += 1;
+        }
+
+    for (i=0; i < guidesHit; i++) {
+        phrase.push (new Phrase(width,random(0,height),5));
+        phrase[i].createTextGraphic();
+        console.log("hi");
+      }
+    //guide is no longer displayed
+    this.displayGuide = false;
+    //once this is called, no further phrases are created from this particular instance of collision
+    this.createPhrase = false;
   }
 }

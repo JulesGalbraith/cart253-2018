@@ -54,13 +54,13 @@ User.prototype.display = function() {
 
 //users size varies according to a noise function
   this.size = this.size + map(noise(this.t),0,1,-1,1);
-  this.size = constrain(this.size,10,50);
+  this.size = constrain(this.size,30,100);
 
 //user is a white torus who rotates in space
   push();
   fill(255);
   stroke(200);
-  translate(this.x-width/2,this.y-height/2,0);
+  translate(this.x,this.y,0);
   rotateX(this.angle);
   rotateY(this.angle*2);
   torus(this.size,this.tubeSize)
