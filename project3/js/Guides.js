@@ -17,16 +17,10 @@ if (this.displayGuide) {
   push();
 
   fill(this.r,this.g,this.b)
-//  stroke(150);
-//  strokeWeight(1);
- //noStroke();
+  stroke(255);
 
-//guides rotate slowly for the sake of ambiance
   translate(this.x,this.y,0);
-//  angleMode(DEGREES);
-//  rotateY(this.angle);
   ellipsoid(this.size,this.size,this.size);
-//  this.angle += 50;
   pop();
 
   }
@@ -37,21 +31,23 @@ Guide.prototype.encounter = function(user){
 //calculates distance between respective centres of guide and user
   var distance = dist(this.x,this.y,user.x,user.y);
 //detects collision
-  if (distance < (this.size/2 + user.size/2) && this.createPhrase === true) {
+  if (distance < (this.size/2 + user.size) && this.createPhrase === true) {
 
 //tracks how many guides have been hit, triggering a corresponding phrase to appear
   if (guidesHit < displayedPhrases.length){
         guidesHit += 1;
-        }
-
-    for (i=0; i < guidesHit; i++) {
-        phrase.push (new Phrase(width,random(0,height),5));
-        phrase[i].createTextGraphic();
-        console.log("hi");
       }
+
+  // for (i=0; i < guidesHit; i++) {
+        phrase.push (new Phrase(width,random(0,height),5));
+        phrase[guidesHit-1].createTextGraphic();
+        //console.log("hi");
+  //    }
     //guide is no longer displayed
     this.displayGuide = false;
     //once this is called, no further phrases are created from this particular instance of collision
     this.createPhrase = false;
+
+    thePop.play();
   }
 }

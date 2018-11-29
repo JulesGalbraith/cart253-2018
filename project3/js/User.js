@@ -47,7 +47,6 @@ User.prototype.handleInput = function() {
   this.x = constrain(this.x,0,width);
   this.y = constrain(this.y,0,height);
 
-console.log(this.x);
 }
 
 User.prototype.display = function() {
@@ -68,4 +67,5 @@ User.prototype.display = function() {
 
   this.t += 0.01;
   this.angle += 0.05;
+console.log(this.angle);
 }

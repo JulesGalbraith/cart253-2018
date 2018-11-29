@@ -1,5 +1,10 @@
 
 
+
+
+
+
+
 var guides = [];
 var welcome;
 var inGame = false;
@@ -15,7 +20,7 @@ var guidesHit = 0;
 var displayedPhrases = [
   "lorem ipsum",
   "noli mi tangere",
-  "humanity is engaged in a long game of bloody knuckles",
+  "thought thinking thoughts",
   "don't activate those pathways",
   "every habit is located in a cluster of co-dependent cells",
   "all bodies have something in common",
@@ -25,27 +30,32 @@ var displayedPhrases = [
   "isaac newton slaps the roof of a car - the roof slaps back",
   "what is the nature of your fantasy",
   "imagination produces reality",
-  "compassion for its own sake challenges neoliberalism",
-  "self-satisfaction is a direct resistance to capitalism",
-  "professionalism is a construct devaluing outsider knowledge"]
+  "the difference between you and yourself is object status",
+  "a platitude is valuable if it cheers you up",
+  "i'm worth my weight in pithy thoughts"]
 
 //variable designating the user
 var user;
 //variable tracking how many times the mouse has been clicked
 var clicks = 0;
 
+//variables holding sound files, one to play for the duration of the game, one only
+//when a guide is eaten
+var thePop;
 
 function preload() {
+  //loads font on welcome screen
   welcomeFont = loadFont("assets/fonts/BebasNeueLight.otf");
+  //loads sounds
+  thePop = loadSound("assets/sounds/pop.mp3");
 }
 
 function setup(){
 
   createCanvas(windowWidth,windowHeight,WEBGL);
   //creates a lost user, floating in a void of sorts, seaching for direction
-  user = new User(width/2,height/2,50,0,0,10,UP_ARROW,DOWN_ARROW,LEFT_ARROW,RIGHT_ARROW);
-
-}
+  user = new User(width/2,height/2,100,0,0,10,UP_ARROW,DOWN_ARROW,LEFT_ARROW,RIGHT_ARROW);
+  }
 
 
 function draw(){
@@ -71,6 +81,7 @@ function draw(){
   for (i=0; i < guidesHit; i++) {
     phrase[i].display();
     phrase[i].updatePosition();
+    phrase[i].die();
 
     }
   }
@@ -79,7 +90,7 @@ function draw(){
 //creates a new object at mouse location every time the mouse is clicked
 function mouseReleased() {
   clicks += 1;
-  guides.push (new Guide(mouseX,mouseY,50,random(150,255),random(150,255),random(150,255)));
+  guides.push (new Guide(mouseX,mouseY,100,random(150,255),random(150,255),random(150,255)));
 }
 
 
@@ -93,6 +104,7 @@ function keyPressed() {
   if (keyCode === SHIFT) {
     location.reload();
   }
+
 }
 
 

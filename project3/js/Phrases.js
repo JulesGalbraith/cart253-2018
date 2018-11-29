@@ -21,7 +21,6 @@ Phrase.prototype.display = function() {
 
    push();
     translate(this.x,this.y,0);
-    angleMode(DEGREES);
     texture(this.textGraphic)
     plane(20*this.size,this.size);
     pop();
@@ -30,7 +29,7 @@ Phrase.prototype.display = function() {
 //draws a 2d canvas that text can appear on; to be used as a texture on the plane
 Phrase.prototype.createTextGraphic = function () {
 
-  this.textGraphic = createGraphics(this.w,this.h);
+  this.textGraphic = createGraphics(this.w,2*this.h/3);
 
     push();
     this.textGraphic.background(0);
@@ -42,4 +41,10 @@ Phrase.prototype.createTextGraphic = function () {
 //chooses from a global array of phrases to display
     this.textGraphic.text(displayedPhrases[this.text],this.w/2,this.h/2);
     pop();
+}
+
+Phrase.prototype.die = function () {
+  if (this.x < -width){
+  //  phrase.pop();
+  }
 }
