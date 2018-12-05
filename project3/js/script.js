@@ -177,5 +177,5 @@ function fillPhrases() {
     "what is a thing of beauty, if not us",
     "feelings - easy enough to cancel, if minds were machines",
     "the discourse continues"
-  ]
+  ];
 }
