@@ -128,7 +128,7 @@ function welcomeScreen() {
  welcome.text("quasi-solicited advice is just a click away!",width/2, 700);
  welcome.text("is it welcome? is it wise?",width/2,1300);
  welcome.text("hard to know - best to just run into it",width/2,1500);
- welcome.text("press enter to begin - click to ",width/2,2000);
+ welcome.text("press enter to begin",width/2,2000);
   pop();
 
 //creates a plane to display graphic as a texture on
