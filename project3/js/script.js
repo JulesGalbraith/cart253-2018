@@ -171,10 +171,11 @@ function fillPhrases() {
     "a discontinuity, a faultline, a weakness - an opportunity",
     "freedom only in relation to one's own impulses",
     "fragility, mutability, humanity",
-    "an image within a conversation lost to its speakers";
+    "an image within a conversation lost to its speakers",
     "an object impeding its own theorization",
     "standard, limit, quality",
     "what is a thing of beauty, if not us",
-    "feelings - easy enough to cancel, if minds were machines"
+    "feelings - easy enough to cancel, if minds were machines",
+    "the discourse continues"
   ]
 }
