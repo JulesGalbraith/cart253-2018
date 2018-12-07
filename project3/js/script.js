@@ -124,8 +124,8 @@ function welcomeScreen() {
   welcome.textSize(150);
   welcome.noStroke();
   welcome.textAlign(CENTER);
- welcome.text("it's okay to feel a little lost sometimes—",width/2,500);
- welcome.text("quasi-solicited advice is just a click away!",width/2, 700);
+ welcome.text("everyone feels a little lost sometimes—",width/2,500);
+ welcome.text("a free floating thought is just a click away!",width/2, 700);
  welcome.text("is it welcome? is it wise?",width/2,1300);
  welcome.text("hard to know - best to just run into it",width/2,1500);
  welcome.text("press enter to begin",width/2,2000);
@@ -143,15 +143,13 @@ function welcomeScreen() {
 function fillPhrases() {
 
   displayedPhrases = [
-    "lorem ipsum",
-    "noli mi tangere",
     "thought thinking thoughts",
     "don't activate those pathways",
     "every habit is located in a cluster of co-dependent cells",
     "all bodies have something in common",
     "fracture and refraction are processes of self-formation",
     "the order of the social world produces unspeakable subjects",
-    "knowledge is creation is power- thinking is prior to being",
+    "thinking is prior to being",
     "isaac newton slaps the roof of a car - the roof slaps back",
     "what is the nature of your fantasy",
     "imagination produces reality",
@@ -161,8 +159,8 @@ function fillPhrases() {
     "thanks for listening - it means a lot",
     "virtue as living at a critical distance from norms",
     "the reverse is true",
-    "you can't decide when to listen, but what to hear",
-    "sorry, fake news",
+    "not deciding when to listen, but what to hear",
+    "fake news",
     "auto-poeisis is about as complex as taking a good selfie",
     "in the digital, what replaces the loss of the animal",
     "to be governed is to be given terms of existence",
@@ -176,6 +174,22 @@ function fillPhrases() {
     "standard, limit, quality",
     "what is a thing of beauty, if not us",
     "feelings - easy enough to cancel, if minds were machines",
-    "the discourse continues"
+    "the discourse continues",
+    "to recognize is to make real",
+    "the natural is created in movement and conversation",
+    "where is place without light",
+    "a prescription to feel, more, often",
+    "the body knows nothing of its own shapes and distortions",
+    "reason thinks with its own irrationality",
+    "the unlisted term is relation",
+    "the principle of division affects only the intact",
+    "matter strung up and out on stringy forces",
+    "a seed in a palm of a hand in the sun",
+    "the human is a changeable fiction",
+    "a boundary - a definition in other words",
+    "truth is a liquid and slippery asset",
+    "a wanting neither attached or named",
+    "grant the mistaking of intuition for clairvoyance",
+    "the work will be done when the object comes to rest"
   ];
 }
