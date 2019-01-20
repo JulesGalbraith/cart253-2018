@@ -3,11 +3,11 @@ function Phrase (x,y,vx) {
   this.x = x;
   this.y = y;
   this.vx = vx;
-  this.size = 200;
+  this.size = 40;
   //randomizes choice between elements in the array
   this.text = floor(random(displayedPhrases.length));
   this.textGraphic;
-  this.w = windowWidth/2;
+  this.w = windowWidth/3;
   this.h = this.size;
 }
 
@@ -36,7 +36,7 @@ Phrase.prototype.createTextGraphic = function () {
     this.textGraphic.background(0,0);
     this.textGraphic.fill(255);
     this.textGraphic.noStroke();
-    this.textGraphic.textSize(70);
+    this.textGraphic.textSize(15);
     this.textGraphic.textAlign(CENTER);
 
 //chooses from a global array of phrases to display

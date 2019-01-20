@@ -32,8 +32,11 @@ var guidesHit = 0;
 //array holding phrases, randomly selected to appear as texture
 var displayedPhrases = []
 
+var canvasWidth = 1000;
+var canvasHeight = 700;
 //variable designating the user
 var user;
+var userSize = 20;
 //variable tracking how many times the mouse has been clicked
 var clicks = 0;
 
@@ -52,9 +55,9 @@ function preload() {
 
 function setup(){
 
-  createCanvas(windowWidth,windowHeight,WEBGL);
+  createCanvas(canvasWidth,canvasHeight,WEBGL);
   //creates a lost user, floating in a void of sorts, seaching for direction
-  user = new User(width/2,height/2,100,0,0,10,UP_ARROW,DOWN_ARROW,LEFT_ARROW,RIGHT_ARROW);
+  user = new User(width/2,height/2,userSize,0,0,10,UP_ARROW,DOWN_ARROW,LEFT_ARROW,RIGHT_ARROW);
   }
 
 
@@ -94,7 +97,7 @@ function draw(){
 //creates a new object at mouse location every time the mouse is clicked
 function mouseReleased() {
   clicks += 1;
-  guides.push (new Guide(mouseX,mouseY,100,random(150,255),random(150,255),random(150,255)));
+  guides.push (new Guide(mouseX,mouseY,30,random(150,255),random(150,255),random(150,255)));
 }
 
 function keyPressed() {
@@ -121,14 +124,14 @@ function welcomeScreen() {
   welcome.background(random(10,50));
   welcome.fill(255,230,221);
   welcome.textFont(welcomeFont);
-  welcome.textSize(150);
+  welcome.textSize(20);
   welcome.noStroke();
   welcome.textAlign(CENTER);
- welcome.text("everyone feels a little lost sometimes—",width/2,500);
- welcome.text("a free floating thought is just a click away!",width/2, 700);
- welcome.text("is it welcome? is it wise?",width/2,1300);
- welcome.text("hard to know - best to just run into it",width/2,1500);
- welcome.text("press enter to begin",width/2,2000);
+ welcome.text("everyone feels a little lost sometimes—",width/2,150);
+ welcome.text("a free floating thought is just a click away!",width/2, 200);
+ welcome.text("is it welcome? is it wise?",width/2,350);
+ welcome.text("hard to know - best to just run into it",width/2,450);
+ welcome.text("press enter to begin",width/2,500);
   pop();
 
 //creates a plane to display graphic as a texture on
@@ -160,7 +163,6 @@ function fillPhrases() {
     "virtue as living at a critical distance from norms",
     "the reverse is true",
     "not deciding when to listen, but what to hear",
-    "fake news",
     "auto-poeisis is about as complex as taking a good selfie",
     "in the digital, what replaces the loss of the animal",
     "to be governed is to be given terms of existence",
@@ -174,16 +176,15 @@ function fillPhrases() {
     "standard, limit, quality",
     "what is a thing of beauty, if not us",
     "feelings - easy enough to cancel, if minds were machines",
-    "the discourse continues",
     "to recognize is to make real",
     "the natural is created in movement and conversation",
     "where is place without light",
     "a prescription to feel, more, often",
     "the body knows nothing of its own shapes and distortions",
     "reason thinks with its own irrationality",
-    "the unlisted term is relation",
+    "the unnamed term is relation",
     "the principle of division affects only the intact",
-    "matter strung up and out on stringy forces",
+    "matter hung up and out on stringy forces",
     "a seed in a palm of a hand in the sun",
     "the human is a changeable fiction",
     "a boundary - a definition in other words",

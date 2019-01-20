@@ -39,7 +39,7 @@ Guide.prototype.encounter = function(user){
   if (guidesHit < displayedPhrases.length){
         guidesHit += 1;
       }
-        phrase.push (new Phrase(width,random(0,height),5));
+        phrase.push (new Phrase(width,random(0,height),2));
         phrase[guidesHit-1].createTextGraphic();
     //guide is no longer displayed
     this.displayGuide = false;
